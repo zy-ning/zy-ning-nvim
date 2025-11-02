@@ -93,15 +93,20 @@ export const useProfileData = (filePath: string, theme?: string): ProfileData | 
   useEffect(() => {
     const fetchAndParse = async () => {
       try {
+        console.log('Fetching profile from:', filePath);
         const response = await fetch(filePath);
+        console.log('Response status:', response.status, response.statusText);
         if (!response.ok) {
-          throw new Error(`Failed to fetch markdown file: ${response.statusText}`);
+          throw new Error(`Failed to fetch markdown file: ${response.statusText} (${response.status})`);
         }
         const markdownText = await response.text();
+        console.log('Markdown loaded, length:', markdownText.length);
         const data = parseProfileMarkdown(markdownText);
+        console.log('Profile parsed:', data ? 'success' : 'failed');
         setProfileData(data);
       } catch (error) {
         console.error('Error loading profile data:', error);
+        console.error('Attempted path:', filePath);
       }
     };
 
