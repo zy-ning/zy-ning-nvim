@@ -1,7 +1,7 @@
-import React from 'react';
-import { type Section, type BlogPostIndexItem } from '../types';
-import { BlogIndexView } from './BlogIndexView';
-import { BlogPostView } from './BlogPostView';
+import React from "react";
+import { type Section, type BlogPostIndexItem } from "../types";
+import { BlogIndexView } from "./BlogIndexView";
+import { BlogPostView } from "./BlogPostView";
 
 interface ContentWindowProps {
   section: Section | undefined;
@@ -11,7 +11,13 @@ interface ContentWindowProps {
   blogPosts: BlogPostIndexItem[];
 }
 
-export const ContentWindow: React.FC<ContentWindowProps> = ({ section, activePostSlug, onSelectPost, onBackToBlogIndex, blogPosts }) => {
+export const ContentWindow: React.FC<ContentWindowProps> = ({
+  section,
+  activePostSlug,
+  onSelectPost,
+  onBackToBlogIndex,
+  blogPosts,
+}) => {
   if (!section) {
     return (
       <div className="flex-1 p-4 flex items-center justify-center">
@@ -20,8 +26,8 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({ section, activePos
     );
   }
 
-  const isBlogSection = section.title === 'Blog';
-  const activePost = blogPosts.find(p => p.slug === activePostSlug);
+  const isBlogSection = section.title === "Blog";
+  const activePost = blogPosts.find((p) => p.slug === activePostSlug);
   const title = isBlogSection && activePost ? activePost.title : section.title;
 
   return (
@@ -35,14 +41,14 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({ section, activePos
         .prose-styles h1 { font-size: 1.875rem; color: var(--ctp-mauve); }
         .prose-styles h2 { font-size: 1.5rem; color: var(--ctp-maroon); }
         .prose-styles h3 { font-size: 1.25rem; color: var(--ctp-flamingo); }
-        .prose-styles h4 { font-size: 1.125rem; color: var(--ctp-text); }
+        .prose-styles h4 { font-size: 1.125rem; color: var(--ctp-rosewater); }
         .prose-styles p { margin-bottom: 1em; line-height: 1.6; }
         .prose-styles a { color: var(--ctp-sapphire); text-decoration: underline; }
         .prose-styles ul:not(.contact-list):not(.blog-index-list) { list-style-type: '» '; padding-left: 1.5rem; margin-bottom: 1em; }
         .prose-styles li { padding-left: 0.5rem; margin-bottom: 0.25em; }
         .prose-styles strong { color: var(--ctp-lavender); font-weight: bold; }
         .prose-styles semibold { color: var(--ctp-lavender); font-weight: 600; }
-        .prose-styles em { color: var(--ctp-rosewater); font-style: italic; }
+        .prose-styles em { color: var(--ctp-pink); font-style: italic; }
         .prose-styles code {
             background-color: var(--ctp-surface0);
             color: var(--ctp-mauve);
@@ -67,26 +73,46 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({ section, activePos
         .prose-styles .contact-list { list-style-type: none; padding-left: 0; }
         .prose-styles .contact-list li { display: flex; align-items: center; margin-bottom: 0.5rem; }
       `}</style>
-      <h2 className={`
-        text-2xl font-bold mb-4 pb-2
-        border-b border-dashed
-        border-b-[var(--ctp-overlay0)]
-        text-[var(--ctp-maroon)]
-      `}>
-        {title}
-      </h2>
 
       {isBlogSection ? (
         activePostSlug ? (
           <BlogPostView slug={activePostSlug} onBack={onBackToBlogIndex} />
         ) : (
           <>
-            <div className="prose-styles" dangerouslySetInnerHTML={{ __html: section.content }} />
+            <h2
+              className={`
+              text-2xl font-bold mb-4 pb-2
+              border-b border-dashed
+              border-b-[var(--ctp-overlay0)]
+              text-[var(--ctp-maroon)]
+          `}
+            >
+              {title}
+            </h2>
+            <div
+              className="prose-styles"
+              dangerouslySetInnerHTML={{ __html: section.content }}
+            />
             <BlogIndexView posts={blogPosts} onSelectPost={onSelectPost} />
           </>
         )
       ) : (
-        <div className="prose-styles" dangerouslySetInnerHTML={{ __html: section.content }} />
+        <>
+          <h2
+            className={`
+              text-2xl font-bold mb-4 pb-2
+              border-b border-dashed
+              border-b-[var(--ctp-overlay0)]
+              text-[var(--ctp-maroon)]
+          `}
+          >
+            {title}
+          </h2>
+          <div
+            className="prose-styles"
+            dangerouslySetInnerHTML={{ __html: section.content }}
+          />
+        </>
       )}
     </main>
   );

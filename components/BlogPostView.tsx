@@ -12,14 +12,14 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({ slug, onBack }) => {
 
     return (
         <div>
-            <button 
-                onClick={onBack} 
-                className="flex items-center mb-6 text-[var(--ctp-blue)] hover:underline"
+            <button
+                onClick={onBack}
+                className="flex items-center mb-6 text-[var(--ctp-subtext0)] hover:underline"
             >
                 <Icon name="fas fa-arrow-left" className="mr-2" />
                 Back to Blog Index
             </button>
-            
+
             {content ? (
                  <div className="prose-styles" dangerouslySetInnerHTML={{ __html: content }} />
             ) : (

@@ -1,2 +1,0 @@
-- 2023-10-27 | [Setting Up My New Digital Space](./setting-up-my-new-digital-space.md)
-- 2023-09-15 | [Thoughts on Reproducible Research](./thoughts-on-reproducible-research.md)

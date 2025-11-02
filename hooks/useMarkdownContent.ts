@@ -48,13 +48,21 @@ const parseProfileMarkdown = (markdown: string): ProfileData | null => {
 
   // Parse Sections
   blocks.forEach(block => {
-    const lines = block.split('\n').filter(l => l.trim() !== ''); // Remove empty lines
-    if (lines.length === 0) return;
+    const lines = block.split('\n');
 
-    const title = lines.shift()?.replace('## ', '').trim();
+    // Find the first non-empty line for the title
+    let titleIndex = 0;
+    while (titleIndex < lines.length && lines[titleIndex].trim() === '') {
+      titleIndex++;
+    }
+
+    if (titleIndex >= lines.length) return;
+
+    const title = lines[titleIndex].replace('## ', '').trim();
     if (!title) return;
 
-    const content = lines.join('\n');
+    // Keep all lines after the title, INCLUDING blank lines (crucial for Markdown parsing)
+    const content = lines.slice(titleIndex + 1).join('\n');
     let parsedContent = window.marked.parse(content);
 
     // Add a class to the first list in "About Me" for styling contacts

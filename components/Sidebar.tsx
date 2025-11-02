@@ -38,6 +38,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, onSel
               <Icon name={
                 section === 'Blog' ? 'fas fa-rss' :
                 section === 'About Me' ? 'fas fa-user' :
+                section === 'Experience' ? 'fas fa-briefcase' :
+                section === 'Publications' ? 'fas fa-book' :
+                section === 'Random Play' ? 'fas fa-music' :
                 'fas fa-file-lines'
               } className="mr-2 w-4" />
               {section}
