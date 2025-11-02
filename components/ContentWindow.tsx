@@ -32,15 +32,18 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({ section, activePos
           margin-bottom: 0.5em;
           margin-top: 1em;
         }
-        .prose-styles h1 { font-size: 1.875rem; color: var(--ctp-red); }
-        .prose-styles h2 { font-size: 1.5rem; color: var(--ctp-peach); }
-        .prose-styles h3 { font-size: 1.25rem; color: var(--ctp-yellow); }
+        .prose-styles h1 { font-size: 1.875rem; color: var(--ctp-mauve); }
+        .prose-styles h2 { font-size: 1.5rem; color: var(--ctp-maroon); }
+        .prose-styles h3 { font-size: 1.25rem; color: var(--ctp-flamingo); }
+        .prose-styles h4 { font-size: 1.125rem; color: var(--ctp-text); }
         .prose-styles p { margin-bottom: 1em; line-height: 1.6; }
-        .prose-styles a { color: var(--ctp-blue); text-decoration: underline; }
+        .prose-styles a { color: var(--ctp-sapphire); text-decoration: underline; }
         .prose-styles ul:not(.contact-list):not(.blog-index-list) { list-style-type: '» '; padding-left: 1.5rem; margin-bottom: 1em; }
         .prose-styles li { padding-left: 0.5rem; margin-bottom: 0.25em; }
-        .prose-styles strong { color: var(--ctp-green); font-weight: bold; }
-        .prose-styles code { 
+        .prose-styles strong { color: var(--ctp-lavender); font-weight: bold; }
+        .prose-styles semibold { color: var(--ctp-lavender); font-weight: 600; }
+        .prose-styles em { color: var(--ctp-rosewater); font-style: italic; }
+        .prose-styles code {
             background-color: var(--ctp-surface0);
             color: var(--ctp-mauve);
             padding: 0.2em 0.4em;
@@ -65,14 +68,14 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({ section, activePos
         .prose-styles .contact-list li { display: flex; align-items: center; margin-bottom: 0.5rem; }
       `}</style>
       <h2 className={`
-        text-2xl font-bold mb-4 pb-2 
-        border-b border-dashed 
+        text-2xl font-bold mb-4 pb-2
+        border-b border-dashed
         border-b-[var(--ctp-overlay0)]
-        text-[var(--ctp-sapphire)]
+        text-[var(--ctp-maroon)]
       `}>
         {title}
       </h2>
-      
+
       {isBlogSection ? (
         activePostSlug ? (
           <BlogPostView slug={activePostSlug} onBack={onBackToBlogIndex} />

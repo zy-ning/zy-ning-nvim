@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { type ProfileData, type Section, type ContactInfo, type BlogPostIndexItem } from '../types';
-import { ICON_MAP } from '../constants';
+import { ICON_MAP, COLORS } from '../constants';
 
 // Make marked available globally
 declare global {
@@ -11,18 +11,31 @@ declare global {
   }
 }
 
+// Helper function to get the current theme's teal color
+const getCurrentTealColor = (): string => {
+  const isDark = document.documentElement.classList.contains('dark');
+  return isDark ? COLORS.teal.mocha : COLORS.teal.latte;
+};
+
 const parseProfileMarkdown = (markdown: string): ProfileData | null => {
   if (!window.marked) {
     console.error('Marked.js not loaded');
     return null;
   }
-  
+
   // Pre-process icons
   let processedMarkdown = markdown;
   Object.entries(ICON_MAP).forEach(([key, value]) => {
     const regex = new RegExp(`\\[${key}\\]`, 'g');
     processedMarkdown = processedMarkdown.replace(regex, `<i class="${value}"></i>`);
   });
+
+  // Replace color codes in typing SVG URLs with theme-appropriate colors
+  const tealColor = getCurrentTealColor();
+  processedMarkdown = processedMarkdown.replace(
+    /color=(94E2D5|04A5E5)/g,
+    `color=${tealColor}`
+  );
 
   const blocks = processedMarkdown.split('\n---\n');
   if (blocks.length < 2) return null;
@@ -37,7 +50,7 @@ const parseProfileMarkdown = (markdown: string): ProfileData | null => {
   blocks.forEach(block => {
     const lines = block.split('\n').filter(l => l.trim() !== ''); // Remove empty lines
     if (lines.length === 0) return;
-    
+
     const title = lines.shift()?.replace('## ', '').trim();
     if (!title) return;
 
@@ -58,7 +71,7 @@ const parseProfileMarkdown = (markdown: string): ProfileData | null => {
 const parseBlogIndex = (markdown: string): BlogPostIndexItem[] => {
     const posts: BlogPostIndexItem[] = [];
     const lines = markdown.split('\n').filter(line => line.startsWith('- '));
-    
+
     lines.forEach(line => {
         // - YYYY-MM-DD | [Title](./slug.md)
         const match = line.match(/- (.*?)\s*\|\s*\[(.*?)\]\(\.\/(.*?)\.md\)/);
@@ -74,7 +87,7 @@ const parseBlogIndex = (markdown: string): BlogPostIndexItem[] => {
     return posts;
 }
 
-export const useProfileData = (filePath: string): ProfileData | null => {
+export const useProfileData = (filePath: string, theme?: string): ProfileData | null => {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
   useEffect(() => {
@@ -93,7 +106,7 @@ export const useProfileData = (filePath: string): ProfileData | null => {
     };
 
     fetchAndParse();
-  }, [filePath]);
+  }, [filePath, theme]);
 
   return profileData;
 };

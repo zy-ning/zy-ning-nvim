@@ -11,23 +11,61 @@ interface StatusBarProps {
 export const StatusBar: React.FC<StatusBarProps> = ({ theme, onToggleTheme, activeSection }) => {
   return (
     <footer className={`
-      flex items-center justify-between px-4 py-0.5 text-sm
-      border-t-2 border-double
-      border-t-[var(--ctp-surface2)]
-      bg-[var(--ctp-mauve)] text-[var(--ctp-base)]
-      font-bold
+      flex items-center h-6 text-sm font-medium
+      border-t border-[var(--ctp-surface0)]
+      bg-[var(--ctp-base)]
     `}>
-      <div className="flex items-center">
-        <span className="mr-4">-- NORMAL --</span>
-        <Icon name="fas fa-code-branch" className="mr-2" />
+      {/* Mode indicator - like nvim's mode display */}
+    <div className={`
+        flex items-center px-3 h-full
+        bg-[var(--ctp-surface1)] text-[var(--ctp-lavender)]
+        font-bold
+    `}>
+        <span>NORMAL</span>
+    </div>
+
+      {/* Git branch */}
+      <div className={`
+        flex items-center px-3 h-full
+        bg-[var(--ctp-surface0)] text-[var(--ctp-text)]
+      `}>
+        <Icon name="fas fa-code-branch" className="mr-2 text-[var(--ctp-mauve)]" />
         <span>main</span>
       </div>
-      <div className="flex items-center">
-        <span className="mr-4">{activeSection}</span>
-        <button onClick={onToggleTheme} className="flex items-center">
-          <Icon name={theme === 'mocha' ? 'fas fa-moon' : 'fas fa-sun'} className="mr-2" />
-          <span>{theme.toUpperCase()}</span>
-        </button>
+
+      {/* Active section / file info */}
+      <div className={`
+        flex items-center px-3 h-full
+        bg-[var(--ctp-mantle)] text-[var(--ctp-text)]
+        flex-1
+      `}>
+        <Icon name="fas fa-file-code" className="mr-2 text-[var(--ctp-blue)]" />
+        <span>{activeSection}</span>
+      </div>
+
+      {/* Theme toggle */}
+      <button
+        onClick={onToggleTheme}
+        className={`
+          flex items-center px-3 h-full
+          bg-[var(--ctp-surface1)] text-[var(--ctp-text)]
+          hover:bg-[var(--ctp-surface0)]
+          transition-colors duration-150
+        `}
+      >
+        <Icon name={theme === 'mocha' ? 'fa fa-moon' : 'fa fa-sun'} className="mr-2 text-[var(--ctp-yellow)]" />
+        <span className="text-xs">{theme.toUpperCase()}</span>
+      </button>
+
+      {/* Percentage/position indicator */}
+      <div className={`
+        flex items-center px-3 h-full
+        bg-[var(--ctp-surface2)] text-[var(--ctp-blue)]
+        font-bold text-xs
+      `}>
+        {/* <Icon name="fas fa-terminal" className="mr-2" /> */}
+        <i class="fas fa-neovim"></i>
+        <span>  NEOVIM</span>
       </div>
     </footer>
   );

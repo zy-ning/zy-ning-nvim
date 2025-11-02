@@ -8,7 +8,7 @@ import { useTheme } from './hooks/useTheme';
 
 const App: React.FC = () => {
   const [theme, toggleTheme] = useTheme();
-  const profileData = useProfileData('/content/profile.md');
+  const profileData = useProfileData('/content/profile.md', theme);
   const blogPosts = useBlogIndex('/content/blog/index.md');
   const [activeSection, setActiveSection] = useState<string>('About Me');
   const [activePostSlug, setActivePostSlug] = useState<string | null>(null);
@@ -20,7 +20,7 @@ const App: React.FC = () => {
 
   const sectionTitles = profileData?.sections.map(s => s.title) || [];
   const currentSectionData = profileData?.sections.find(s => s.title === activeSection);
-  
+
   const activePost = blogPosts.find(p => p.slug === activePostSlug);
   const statusText = activePost ? `Blog > ${activePost.title}` : activeSection;
 
@@ -32,7 +32,7 @@ const App: React.FC = () => {
     `}>
       {profileData ? (
         <>
-          <Header name={profileData.name} />
+          {/* <Header name={profileData.name} /> */}
           <div className="flex flex-1 overflow-hidden">
             <Sidebar
               sections={sectionTitles}
@@ -40,8 +40,8 @@ const App: React.FC = () => {
               onSelectSection={handleSelectSection}
             />
             <div className="flex-1 flex flex-col min-w-0">
-                <ContentWindow 
-                  section={currentSectionData} 
+                <ContentWindow
+                  section={currentSectionData}
                   activePostSlug={activePostSlug}
                   onSelectPost={setActivePostSlug}
                   onBackToBlogIndex={() => setActivePostSlug(null)}
