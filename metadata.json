@@ -1,0 +1,5 @@
+{
+  "name": "TUI Academic Profile",
+  "description": "A personal academic profile website with a TUI/Neovim aesthetic, Catppuccin color palette, and content managed via a single Markdown file.",
+  "requestFramePermissions": []
+}
