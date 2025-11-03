@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { type Section, type BlogPostIndexItem } from "../types";
 import { BlogIndexView } from "./BlogIndexView";
 import { BlogPostView } from "./BlogPostView";
@@ -9,6 +9,8 @@ interface ContentWindowProps {
   onSelectPost: (slug: string) => void;
   onBackToBlogIndex: () => void;
   blogPosts: BlogPostIndexItem[];
+  zenMode?: boolean;
+  onWordCountChange?: (count: number) => void;
 }
 
 export const ContentWindow: React.FC<ContentWindowProps> = ({
@@ -17,7 +19,18 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
   onSelectPost,
   onBackToBlogIndex,
   blogPosts,
+  zenMode = false,
+  onWordCountChange,
 }) => {
+  // Calculate word count whenever section changes
+  useEffect(() => {
+    if (section && onWordCountChange) {
+      const text = section.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      const count = text ? text.split(' ').length : 0;
+      onWordCountChange(count);
+    }
+  }, [section, onWordCountChange]);
+
   if (!section) {
     return (
       <div className="flex-1 p-4 flex items-center justify-center">
@@ -31,14 +44,16 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
   const title = isBlogSection && activePost ? activePost.title : section.title;
 
   return (
-    <main className="flex-1 p-6 overflow-y-auto">
+    <div className="flex-1 flex overflow-hidden">
+      <main className={`flex-1 p-6 overflow-y-auto ${zenMode ? 'flex justify-center' : ''}`}>
+        <div className={zenMode ? 'w-full max-w-4xl' : 'w-full'}>
       <style>{`
         .prose-styles h1, .prose-styles h2, .prose-styles h3 {
           font-weight: bold;
           margin-bottom: 0.5em;
           margin-top: 1em;
         }
-        .prose-styles h1 { font-size: 1.875rem; color: var(--ctp-mauve); }
+        .prose-styles h1 { font-size: 1.875rem; color: var(--ctp-mauve); text-shadow: 0 0 2px var(--ctp-crust), 0 0 7px rgba(203, 166, 247, 0.5), 0 0 15px rgba(203, 166, 247, 0.3); }
         .prose-styles h2 { font-size: 1.5rem; color: var(--ctp-maroon); }
         .prose-styles h3 { font-size: 1.25rem; color: var(--ctp-flamingo); }
         .prose-styles h4 { font-size: 1.125rem; color: var(--ctp-rosewater); }
@@ -76,7 +91,7 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
 
       {isBlogSection ? (
         activePostSlug ? (
-          <BlogPostView slug={activePostSlug} onBack={onBackToBlogIndex} />
+          <BlogPostView slug={activePostSlug} onBack={onBackToBlogIndex} post={activePost} onWordCountChange={onWordCountChange} />
         ) : (
           <>
             <h2
@@ -114,6 +129,8 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
           />
         </>
       )}
+      </div>
     </main>
+    </div>
   );
 };

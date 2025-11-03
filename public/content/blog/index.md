@@ -1,2 +1,4 @@
-- 2023-10-27 | [Setting Up My New Digital Space](./setting-up-my-new-digital-space.md)
-- 2023-09-15 | [Thoughts on Reproducible Research](./thoughts-on-reproducible-research.md)
+- 2025-11-03 | [Mastering Neovim Configuration](./mastering-neovim-configuration.md) | tags: neovim, terminal, productivity
+- 2025-11-03 | [Building with React and TypeScript](./building-with-react-and-typescript.md) | tags: react, web-dev
+- 2025-11-02 | [Setting Up My New Digital Space](./setting-up-my-new-digital-space.md) | tags: react, web-dev, neovim
+

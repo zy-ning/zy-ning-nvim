@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
+import { TabBar } from './components/TabBar';
 import { ContentWindow } from './components/ContentWindow';
 import { StatusBar } from './components/StatusBar';
 import { useProfileData, useBlogIndex } from './hooks/useMarkdownContent';
@@ -12,10 +12,20 @@ const App: React.FC = () => {
   const blogPosts = useBlogIndex('/content/blog/index.md');
   const [activeSection, setActiveSection] = useState<string>('About Me');
   const [activePostSlug, setActivePostSlug] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<'sidebar' | 'tab'>('sidebar');
+  const [zenMode, setZenMode] = useState<boolean>(false);
 
   const handleSelectSection = (section: string) => {
     setActiveSection(section);
     setActivePostSlug(null); // Reset post when changing main section
+  };
+
+  const toggleViewMode = () => {
+    setViewMode(prev => prev === 'sidebar' ? 'tab' : 'sidebar');
+  };
+
+  const toggleZenMode = () => {
+    setZenMode(prev => !prev);
   };
 
   const sectionTitles = profileData?.sections.map(s => s.title) || [];
@@ -23,6 +33,7 @@ const App: React.FC = () => {
 
   const activePost = blogPosts.find(p => p.slug === activePostSlug);
   const statusText = activePost ? `Blog > ${activePost.title}` : activeSection;
+  const [wordCount, setWordCount] = useState<number>(0);
 
   return (
     <div className={`
@@ -34,18 +45,29 @@ const App: React.FC = () => {
         <>
           {/* <Header name={profileData.name} /> */}
           <div className="flex flex-1 overflow-hidden">
-            <Sidebar
-              sections={sectionTitles}
-              activeSection={activeSection}
-              onSelectSection={handleSelectSection}
-            />
+            {viewMode === 'sidebar' && !zenMode ? (
+              <Sidebar
+                sections={sectionTitles}
+                activeSection={activeSection}
+                onSelectSection={handleSelectSection}
+              />
+            ) : null}
             <div className="flex-1 flex flex-col min-w-0">
+                {viewMode === 'tab' && !zenMode ? (
+                  <TabBar
+                    sections={sectionTitles}
+                    activeSection={activeSection}
+                    onSelectSection={handleSelectSection}
+                  />
+                ) : null}
                 <ContentWindow
                   section={currentSectionData}
                   activePostSlug={activePostSlug}
                   onSelectPost={setActivePostSlug}
                   onBackToBlogIndex={() => setActivePostSlug(null)}
                   blogPosts={blogPosts}
+                  zenMode={zenMode}
+                  onWordCountChange={setWordCount}
                 />
             </div>
           </div>
@@ -53,6 +75,11 @@ const App: React.FC = () => {
             theme={theme}
             onToggleTheme={toggleTheme}
             activeSection={statusText}
+            viewMode={viewMode}
+            onToggleViewMode={toggleViewMode}
+            zenMode={zenMode}
+            onToggleZenMode={toggleZenMode}
+            wordCount={wordCount}
           />
         </>
       ) : (

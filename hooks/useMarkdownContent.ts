@@ -81,13 +81,17 @@ const parseBlogIndex = (markdown: string): BlogPostIndexItem[] => {
     const lines = markdown.split('\n').filter(line => line.startsWith('- '));
 
     lines.forEach(line => {
-        // - YYYY-MM-DD | [Title](./slug.md)
-        const match = line.match(/- (.*?)\s*\|\s*\[(.*?)\]\(\.\/(.*?)\.md\)/);
+        // - YYYY-MM-DD | [Title](./slug.md) | tags: tag1, tag2, tag3
+        const match = line.match(/- (.*?)\s*\|\s*\[(.*?)\]\(\.\/(.*?)\.md\)(?:\s*\|\s*tags:\s*(.+))?/);
         if (match) {
+            const tags = match[4]
+                ? match[4].split(',').map(tag => tag.trim()).filter(Boolean)
+                : [];
             posts.push({
                 date: match[1].trim(),
                 title: match[2].trim(),
                 slug: match[3].trim(),
+                tags,
             });
         }
     });

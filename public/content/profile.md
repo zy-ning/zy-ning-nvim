@@ -9,7 +9,7 @@
 
 <div style="width: fit-content;">
 
-<pre style="font-size: 16px; color: var(--ctp-blue); background: var(--ctp-base); line-height: 1.2; width: fit-content;">
+<pre style="font-size: 16px; color: var(--ctp-blue); background: var(--ctp-base); line-height: 1.2; width: fit-content;  text-shadow: 0 0 2px var(--ctp-crust), 0 0 7px var(--ctp-blue), 0 0 15px var(--ctp-lavender);">
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⣠⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣡⣾⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣿⣟⠻⣿⣿⣿⣿⣿⣿⣿⣿
@@ -40,7 +40,7 @@
 Zhiyuan Ning
 </h1>
 
-<p style="margin-bottom: 0.2rem; font-family: 'HouZunSongTi'; font-size: 6rem; color: var(--ctp-pure)">
+<p style="margin-bottom: 0.2rem; font-family: 'HouZunSongTi'; font-size: 6rem; color: var(--ctp-pure); text-shadow: 0 0 2px var(--ctp-crust), 0 0 7px rgba(203, 166, 247, 0.5), 0 0 15px rgba(203, 166, 247, 0.3); ">
 宁 致远
 </p>
 
@@ -54,11 +54,12 @@ Zhiyuan Ning
 <a style="color: var(--ctp-subtext0); font-size: 20px;" href="mailto:telegraphpolehead@sjtu.edu.cn">[nf-fa-envelope]</a> <span style="width: 0.5rem; display: inline-block;"></span>
 <a style="color: var(--ctp-subtext0); font-size: 20px;" href="https://github.com/zy-ning">[nf-fa-github]</a> <span style="width: 0.5rem; display: inline-block;"></span>
 <a style="color: var(--ctp-subtext0); font-size: 20px;" href="https://scholar.google.com/citations?user=wX_8zE4AAAAJ&hl=en">[nf-fa-google]</a> <span style="width: 0.5rem; display: inline-block;"></span>
-<a style="color: var(--ctp-subtext0); font-size: 20px;" href="https://www.linkedin.com/in/zhiyuan-ning">[nf-fa-linkedin]</a>
+<a style="color: var(--ctp-subtext0); font-size: 20px;" href="https://www.linkedin.com/in/zhiyuan-ning-79a8282a6">[nf-fa-linkedin]</a>
 <!-- <p><a href="https://twitter.com/janedoe_research">[nf-fa-twitter]</a></p> -->
 <!-- <p><a href="https://example.com">[nf-fa-globe]</a></p> -->
 
 <br/>
+
 
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=94E2D5&background=11204E00&width=435&lines=Efficient+AI+System;Next-Gen+Model+Architecture;General+Multimodal+Models" alt="Typing SVG" /></a>
 
@@ -68,20 +69,15 @@ Zhiyuan Ning
 
 <!-- end of header section -->
 
+### Bio
+
 I am currently an undergraduate student at Global College, **Shanghai Jiao Tong University**, pursuing a BSE in Electrical and Computer Engineering. I've been deeply involved in research on large language models (LLMs) and multimodal large language models (MLLMs), through internships at prestigious institutions such as the *Shanghai Artificial Intelligence Laboratory* and *China Telecom's Institute of Artificial Intelligence (TeleAI)*.
 
-I'm honored to be accepted to the PhD program in **Fudan NLP & SII** starting Fall 2026. My future research will focus on advancing the architecture and infrastructure of large models (LLMs, MLLMs, Diffusion Models), aiming to enhance their efficiency, scalability, and real-world applicability.
+I am honored to have been accepted into the **PhD program at Fudan NLP & SII**, commencing Fall 2026. My doctoral research will center on advancing the architectural design and computational infrastructure of large-scale models, including LLMs, MLLMs, and Diffusion Models, with a focus on improving their efficiency, scalability, and practical deployment in real-world applications.
 
+### News
 
-### Publications
-
-#### CAS-Spec: Cascade Adaptive Self-Speculative Decoding for On-the-Fly Lossless Inference Acceleration of LLMs
-***Zhiyuan Ning**, Jiawei Shao, Ruge Xu, Xinfei Guo, Jun Zhang, Chi Zhang, Xuelong Li*. **NeurIPS 2025 Poster**.
-[nf-fa-file-pdf] [openreview](https://openreview.net/pdf/7be7febdbc687ff1d863bbeaf1f37fb1b683f4bc.pdf)
-
-#### LinguaSafe: A Comprehensive Multilingual Safety Benchmark for Large Language Models
-***Zhiyuan Ning**, Tianle Gu, Jiaxin Song, Shixin Hong, Lingyu Li, Huacan Liu, Jie Li, Yixu Wang, Lingyu Meng, Yingchun Wang, Yan Teng*. **Manuscript under review, AAAI 2026**.
-[nf-fa-file-pdf] [arXiv:2508.12733](https://arxiv.org/abs/2508.12733)
+*[Oct 2025]:* My paper on **Cascade Self-Speculative Decoding (CAS-Spec)** has been accepted to **NeurIPS 2025**!
 
 
 
@@ -92,7 +88,6 @@ I'm honored to be accepted to the PhD program in **Fudan NLP & SII** starting Fa
 
 #### Shanghai Jiao Tong University
 **BSE in Electrical and Computer Engineering**, UM-SJTU Joint Institute | Sep 2022 - Aug 2026 (expected)
-- GPA: 3.34/4.0 | TOEFL: 102
 - SJTU JI Honors Research Program certified
 - Extraordinary Scholarship (full scholarship) recipient
 
@@ -111,27 +106,25 @@ I'm honored to be accepted to the PhD program in **Fudan NLP & SII** starting Fa
 #### AI Security Research Intern
 **Shanghai Artificial Intelligence Laboratory** | *Shanghai, China* | Sep 2024 - Jan 2025
 - Explored the generalization and robustness of LLM safety alignment against adversarial attacks and multilingual challenges.
-- Developed multilingual safety datasets and enhanced InternLM3-8B's multilingual safety via SFT and preference alignment.
-- Strengthened multilingual safety evaluation, leading to the development of the **LinguaSafe** benchmark.
-- Researched the impact of quantization on model safety and contributed to visual Outcome/Process Reward Models (ORM/PRM).
+- Developed multilingual safety datasets and enhanced InternLM3-8B's multilingual safety via SFT and preference alignment, leading to the development of the **LinguaSafe** benchmark.
+- Researched the impact of quantization on model safety and contributed to visual Outcome/Process Reward Models (ORM/PRM) for Intern-S1.
 
 #### AI Software Engineer Intern
-**ABB Engineering (Shanghai) Co Ltd** | *Shanghai, China* | Jun 2024 - Aug 2024
+**ABB Engineering (Shanghai) Co Ltd** | *Shanghai, China* | Jan 2024 - Apr 2024
 - Developed real-time face detection/recognition applications using SOTA models (YuNet, SFace) on edge devices like NV Jetson Xavier.
 - Deployed a quantized Chat-GLM-3-6B on edge for prompt-engineered, human-computer interaction.
 - Developed a full-stack web application (MVP) using React (Next.js), FastAPI, and Sqlite3.
-
 
 
 ---
 ## Publications
 
 #### CAS-Spec: Cascade Adaptive Self-Speculative Decoding for On-the-Fly Lossless Inference Acceleration of LLMs
-***Zhiyuan Ning**, Jiawei Shao, Ruge Xu, Xinfei Guo, Jun Zhang, Chi Zhang, Xuelong Li*. **NeurIPS 2025 Poster**.
+*<u>Zhiyuan Ning</u>, Jiawei Shao, Ruge Xu, Xinfei Guo, Jun Zhang, Chi Zhang, Xuelong Li*. **NeurIPS 2025 Poster**.
 [nf-fa-file-pdf] [openreview](https://openreview.net/pdf/7be7febdbc687ff1d863bbeaf1f37fb1b683f4bc.pdf)
 
 #### LinguaSafe: A Comprehensive Multilingual Safety Benchmark for Large Language Models
-***Zhiyuan Ning**, Tianle Gu, Jiaxin Song, Shixin Hong, Lingyu Li, Huacan Liu, Jie Li, Yixu Wang, Lingyu Meng, Yingchun Wang, Yan Teng*. **Manuscript under review, AAAI 2026**.
+*<u>Zhiyuan Ning</u>, Tianle Gu, Jiaxin Song, Shixin Hong, Lingyu Li, Huacan Liu, Jie Li, Yixu Wang, Lingyu Meng, Yingchun Wang, Yan Teng*. **Manuscript under review, AAAI 2026**.
 [nf-fa-file-pdf] [arXiv:2508.12733](https://arxiv.org/abs/2508.12733)
 
 ---
@@ -142,16 +135,24 @@ A collection of my thoughts, findings, and explorations in the world of computat
 ---
 ## Random Play
 
-<p style="margin-bottom: 0.5rem; font-family: 'HouZunSongTi'; font-size: 10rem; color: var(--ctp-pure)">
+<a href="https://www.youtube.com/watch?v=JK_hBk2f01k" style="text-decoration: none; margin-bottom: 0.5rem; font-family: 'HouZunSongTi'; font-size: 10rem; color: var(--ctp-pure); text-shadow: 0 0 2px var(--ctp-crust), 0 0 7px rgba(203, 166, 247, 0.5), 0 0 15px rgba(203, 166, 247, 0.3);">
 青い、濃い、橙色の日
-</p>
+</a>
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+<div align="right">
+<a href="https://www.youtube.com/watch?v=q6b8AjlaSRo" style="text-decoration: none; margin-bottom: 0.2rem; font-family: 'HouZunSongTi'; font-size: 5rem; color: var(--ctp-pure); text-shadow: 0 0 2px var(--ctp-crust), 0 0 7px rgba(203, 166, 247, 0.5), 0 0 15px rgba(203, 166, 247, 0.3); ">
+退屈しのぎ
+</a>
 
 <br/>
 
-<p style="margin-bottom: 0.2rem; font-family: 'HouZunSongTi'; font-size: 5rem; color: var(--ctp-pure); text-align: right;">
-退屈しのぎ
-</p>
-
-<p style="margin-bottom: 0.2rem; font-family: 'HouZunSongTi'; font-size: 16rem; color: var(--ctp-pure); text-align: right;">
+<a href="https://www.youtube.com/watch?v=9kSYrcuhhZA" style="text-decoration: none; margin-bottom: 0.2rem; font-family: 'HouZunSongTi'; font-size: 16rem; color: var(--ctp-pure); text-shadow: 0 0 2px var(--ctp-crust), 0 0 7px rgba(203, 166, 247, 0.5), 0 0 15px rgba(203, 166, 247, 0.3); ">
 回転・天使
-</p>
+</a>
+</div>

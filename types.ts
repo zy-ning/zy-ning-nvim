@@ -8,6 +8,7 @@ export interface BlogPostIndexItem {
   title: string;
   date: string;
   slug: string;
+  tags?: string[];
 }
 
 export interface Section {
