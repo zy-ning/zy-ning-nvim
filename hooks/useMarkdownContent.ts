@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import { type ProfileData, type Section, type ContactInfo, type BlogPostIndexItem } from '../types';
 import { ICON_MAP, COLORS } from '../constants';
 
-// Make marked available globally
+// Make marked and KaTeX available globally
 declare global {
   interface Window {
     marked: {
       parse: (markdown: string) => string;
+    };
+    katex: {
+      renderToString: (tex: string, options?: any) => string;
     };
   }
 }
@@ -15,6 +18,102 @@ declare global {
 const getCurrentTealColor = (): string => {
   const isDark = document.documentElement.classList.contains('dark');
   return isDark ? COLORS.teal.mocha : COLORS.teal.latte;
+};
+
+// Helper function to render LaTeX expressions in HTML
+const renderLatex = (html: string): string => {
+  if (!window.katex) {
+    console.warn('KaTeX not loaded, skipping LaTeX rendering');
+    return html;
+  }
+
+  try {
+    // Handle display math: $$...$$
+    html = html.replace(/\$\$([\s\S]+?)\$\$/g, (match, tex) => {
+      try {
+        return window.katex.renderToString(tex.trim(), {
+          displayMode: true,
+          throwOnError: false,
+        });
+      } catch (e) {
+        console.error('KaTeX display math error:', e);
+        return match;
+      }
+    });
+
+    // Handle inline math: $...$
+    html = html.replace(/\$([^\$\n]+?)\$/g, (match, tex) => {
+      try {
+        return window.katex.renderToString(tex.trim(), {
+          displayMode: false,
+          throwOnError: false,
+        });
+      } catch (e) {
+        console.error('KaTeX inline math error:', e);
+        return match;
+      }
+    });
+
+    return html;
+  } catch (error) {
+    console.error('Error rendering LaTeX:', error);
+    return html;
+  }
+};
+
+// Helper function to extract and protect LaTeX expressions before markdown parsing
+const protectLatex = (markdown: string): { protectedText: string; expressions: Map<string, string> } => {
+  const expressions = new Map<string, string>();
+  let counter = 0;
+
+  let protectedText = markdown;
+
+  // Protect display math: $$...$$
+  protectedText = protectedText.replace(/\$\$([\s\S]+?)\$\$/g, (match, tex) => {
+    const placeholder = `LATEX_DISPLAY_${counter++}`;
+    expressions.set(placeholder, tex.trim());
+    return placeholder;
+  });
+
+  // Protect inline math: $...$
+  protectedText = protectedText.replace(/\$([^\$\n]+?)\$/g, (match, tex) => {
+    const placeholder = `LATEX_INLINE_${counter++}`;
+    expressions.set(placeholder, tex.trim());
+    return placeholder;
+  });
+
+  return { protectedText, expressions };
+};
+
+// Helper function to restore and render LaTeX expressions after markdown parsing
+const restoreLatex = (html: string, expressions: Map<string, string>): string => {
+  if (!window.katex) {
+    console.warn('KaTeX not loaded, skipping LaTeX rendering');
+    return html;
+  }
+
+  try {
+    let result = html;
+
+    expressions.forEach((tex, placeholder) => {
+      try {
+        const isDisplay = placeholder.startsWith('LATEX_DISPLAY_');
+        const rendered = window.katex.renderToString(tex, {
+          displayMode: isDisplay,
+          throwOnError: false,
+        });
+        result = result.replace(placeholder, rendered);
+      } catch (e) {
+        console.error(`KaTeX error for ${placeholder}:`, e);
+        // Keep the placeholder if rendering fails
+      }
+    });
+
+    return result;
+  } catch (error) {
+    console.error('Error restoring LaTeX:', error);
+    return html;
+  }
 };
 
 const parseProfileMarkdown = (markdown: string): ProfileData | null => {
@@ -63,7 +162,13 @@ const parseProfileMarkdown = (markdown: string): ProfileData | null => {
 
     // Keep all lines after the title, INCLUDING blank lines (crucial for Markdown parsing)
     const content = lines.slice(titleIndex + 1).join('\n');
-    let parsedContent = window.marked.parse(content);
+
+    // Protect LaTeX before markdown parsing
+    const { protectedText: protectedContent, expressions } = protectLatex(content);
+    let parsedContent = window.marked.parse(protectedContent);
+
+    // Restore and render LaTeX after markdown parsing
+    parsedContent = restoreLatex(parsedContent, expressions);
 
     // Add a class to the first list in "About Me" for styling contacts
     if (title === 'About Me') {
@@ -167,7 +272,14 @@ export const useMarkdownFile = (filePath: string): string | null => {
                     setContent(markdownText); // fallback
                     return;
                 }
-                setContent(window.marked.parse(markdownText));
+
+                // Protect LaTeX before markdown parsing
+                const { protectedText: protectedMarkdown, expressions } = protectLatex(markdownText);
+                let parsed = window.marked.parse(protectedMarkdown);
+
+                // Restore and render LaTeX after markdown parsing
+                parsed = restoreLatex(parsed, expressions);
+                setContent(parsed);
             } catch (error) {
                 console.error(`Error loading markdown file: ${filePath}`, error);
                 setContent("Failed to load content.");

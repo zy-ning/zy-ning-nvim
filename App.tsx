@@ -6,14 +6,33 @@ import { StatusBar } from './components/StatusBar';
 import { useProfileData, useBlogIndex } from './hooks/useMarkdownContent';
 import { useTheme } from './hooks/useTheme';
 
+const isMobileDevice = () => {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
 const App: React.FC = () => {
   const [theme, toggleTheme] = useTheme();
   const profileData = useProfileData('/content/profile.md', theme);
   const blogPosts = useBlogIndex('/content/blog/index.md');
   const [activeSection, setActiveSection] = useState<string>('About Me');
   const [activePostSlug, setActivePostSlug] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'sidebar' | 'tab'>('sidebar');
+  const [viewMode, setViewMode] = useState<'sidebar' | 'tab'>(isMobileDevice() ? 'tab' : 'sidebar');
   const [zenMode, setZenMode] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(isMobileDevice());
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = isMobileDevice();
+      setIsMobile(mobile);
+      if (mobile && viewMode === 'sidebar') {
+        setViewMode('tab');
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [viewMode]);
 
   const handleSelectSection = (section: string) => {
     setActiveSection(section);
