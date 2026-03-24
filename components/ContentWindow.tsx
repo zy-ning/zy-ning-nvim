@@ -233,6 +233,21 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
               background: linear-gradient(to right, transparent, var(--ctp-surface1), transparent);
               margin: 2em 0;
             }
+            .prose-content .profile-header {
+              display: flex;
+              gap: 2rem;
+              align-items: flex-start;
+            }
+            @media (max-width: 768px) {
+              .prose-content .profile-header {
+                flex-direction: column;
+                gap: 1.5rem;
+              }
+              .prose-content .profile-header > div {
+                width: 100% !important;
+                flex: none !important;
+              }
+            }
           `}</style>
 
           <div className="prose-content">

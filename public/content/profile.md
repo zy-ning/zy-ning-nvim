@@ -5,9 +5,9 @@
 ## About Me
 
 
-<div style="display: flex; gap: 2rem; align-items: flex-start;">
+<div class="profile-header" style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
 
-<div style="width: fit-content;">
+<div style="flex: 0 0 auto; min-width: 280px;">
 
 <pre style="font-size: 16px; color: var(--ctp-blue); background: var(--ctp-base); line-height: 1.2; width: fit-content;  text-shadow: 0 0 2px var(--ctp-crust), 0 0 7px var(--ctp-blue), 0 0 15px var(--ctp-lavender);">
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
@@ -34,7 +34,7 @@
 
 </div>
 
-<div style="text-align: left;">
+<div style="flex: 1 1 300px; text-align: left; min-width: 280px;">
 
 <h1 style="margin-bottom: 0.2rem;">
 Zhiyuan Ning
