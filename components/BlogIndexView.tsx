@@ -10,6 +10,34 @@ interface BlogIndexViewProps {
 export const BlogIndexView: React.FC<BlogIndexViewProps> = ({ posts, onSelectPost }) => {
     const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
+    // Group posts by originalSlug to handle multiple languages
+    const groupedPosts = useMemo(() => {
+        const groups = new Map<string, BlogPostIndexItem[]>();
+        
+        posts.forEach(post => {
+            const key = post.originalSlug || post.slug;
+            if (!groups.has(key)) {
+                groups.set(key, []);
+            }
+            groups.get(key)!.push(post);
+        });
+        
+        // Return array of grouped posts with primary (non-English) post first
+        return Array.from(groups.entries()).map(([originalSlug, variants]) => {
+            // Sort: Chinese (non _en) first, then English (_en)
+            const sorted = variants.sort((a, b) => {
+                if (a.slug.endsWith('_en') && !b.slug.endsWith('_en')) return 1;
+                if (!a.slug.endsWith('_en') && b.slug.endsWith('_en')) return -1;
+                return 0;
+            });
+            return {
+                primary: sorted[0],
+                variants: sorted,
+                hasMultipleLanguages: sorted.length > 1
+            };
+        });
+    }, [posts]);
+
     const allTags = useMemo(() => {
         const tagSet = new Set<string>();
         posts.forEach(post => {
@@ -19,9 +47,11 @@ export const BlogIndexView: React.FC<BlogIndexViewProps> = ({ posts, onSelectPos
     }, [posts]);
 
     const filteredPosts = useMemo(() => {
-        if (!selectedTag) return posts;
-        return posts.filter(post => post.tags?.includes(selectedTag));
-    }, [posts, selectedTag]);
+        if (!selectedTag) return groupedPosts;
+        return groupedPosts.filter(({ variants }) => 
+            variants.some(post => post.tags?.includes(selectedTag))
+        );
+    }, [groupedPosts, selectedTag]);
 
     if (posts.length === 0) {
         return (
@@ -45,7 +75,7 @@ export const BlogIndexView: React.FC<BlogIndexViewProps> = ({ posts, onSelectPos
                     <div className="flex flex-wrap gap-2">
                         <TagButton
                             label="All"
-                            count={posts.length}
+                            count={groupedPosts.length}
                             isActive={selectedTag === null}
                             onClick={() => setSelectedTag(null)}
                         />
@@ -53,7 +83,9 @@ export const BlogIndexView: React.FC<BlogIndexViewProps> = ({ posts, onSelectPos
                             <TagButton
                                 key={tag}
                                 label={tag}
-                                count={posts.filter(post => post.tags?.includes(tag)).length}
+                                count={groupedPosts.filter(({ variants }) => 
+                                    variants.some(post => post.tags?.includes(tag))
+                                ).length}
                                 isActive={selectedTag === tag}
                                 onClick={() => setSelectedTag(tag)}
                             />
@@ -63,10 +95,10 @@ export const BlogIndexView: React.FC<BlogIndexViewProps> = ({ posts, onSelectPos
             )}
 
             <div className="space-y-3">
-                {filteredPosts.map((post, index) => (
+                {filteredPosts.map(({ primary, variants, hasMultipleLanguages }, index) => (
                     <article
-                        key={post.slug}
-                        onClick={() => onSelectPost(post.slug)}
+                        key={primary.slug}
+                        onClick={() => onSelectPost(primary.slug)}
                         className="group cursor-pointer"
                         style={{ animationDelay: `${index * 50}ms` }}
                     >
@@ -90,23 +122,30 @@ export const BlogIndexView: React.FC<BlogIndexViewProps> = ({ posts, onSelectPos
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-3 mb-1.5">
                                         <time className="text-xs font-medium text-[var(--ctp-subtext0)] bg-[var(--ctp-surface0)] px-2 py-0.5 rounded">
-                                            {post.date}
+                                            {primary.date}
                                         </time>
+                                        
+                                        {hasMultipleLanguages && (
+                                            <span className="text-xs px-2 py-0.5 rounded bg-[var(--ctp-teal)]/20 text-[var(--ctp-teal)] font-medium flex items-center gap-1">
+                                                <Icon name="fas fa-globe" className="text-[10px]" />
+                                                {variants.map(v => v.language === 'en' ? 'EN' : '中文').join(' / ')}
+                                            </span>
+                                        )}
                                     </div>
                                     
                                     <h3 className="text-lg font-semibold text-[var(--ctp-text)] group-hover:text-[var(--ctp-mauve)] transition-colors duration-200 mb-2 line-clamp-2">
-                                        {post.title}
+                                        {primary.title.replace(/ \(.*?\)$/, '')}
                                     </h3>
                                     
-                                    {post.excerpt && (
+                                    {primary.excerpt && (
                                         <p className="text-sm text-[var(--ctp-subtext0)] line-clamp-2 mb-3">
-                                            {post.excerpt}
+                                            {primary.excerpt}
                                         </p>
                                     )}
                                     
-                                    {post.tags && post.tags.length > 0 && (
+                                    {primary.tags && primary.tags.length > 0 && (
                                         <div className="flex flex-wrap gap-1.5">
-                                            {post.tags.map(tag => (
+                                            {primary.tags.map(tag => (
                                                 <span
                                                     key={tag}
                                                     className="text-xs px-2 py-0.5 rounded-md bg-[var(--ctp-surface1)]/50 text-[var(--ctp-teal)] font-medium"
