@@ -119,18 +119,29 @@ I am honored to have been accepted into the **PhD program at Fudan NLP & SII**, 
 ---
 ## Publications
 
+
+
+#### MOVA: Towards Scalable and Synchronized Video–Audio Generation
+*SII-OpenMOSS Team*.
+[nf-fa-file-pdf] [arXiv:2602.08794](https://arxiv.org/abs/2602.08794)
+
+
+#### Breaking Model Lock-in: Cost-Efficient Zero-Shot LLM Routing via a Universal Latent Space
+*Cheng Yan, Wuyang Zhang, <u>Zhiyuan Ning</u>, Fan Xu, Ziyang Tao, Lu Zhang, Bing Yin, Yanyong Zhang*. **AAAI 2025 Poster**.
+[nf-fa-file-pdf] [arXiv:2601.06220](https://arxiv.org/abs/2601.06220)
+
 #### CAS-Spec: Cascade Adaptive Self-Speculative Decoding for On-the-Fly Lossless Inference Acceleration of LLMs
 *<u>Zhiyuan Ning</u>, Jiawei Shao, Ruge Xu, Xinfei Guo, Jun Zhang, Chi Zhang, Xuelong Li*. **NeurIPS 2025 Poster**.
 [nf-fa-file-pdf] [openreview](https://openreview.net/pdf/7be7febdbc687ff1d863bbeaf1f37fb1b683f4bc.pdf)
 
 #### LinguaSafe: A Comprehensive Multilingual Safety Benchmark for Large Language Models
-*<u>Zhiyuan Ning</u>, Tianle Gu, Jiaxin Song, Shixin Hong, Lingyu Li, Huacan Liu, Jie Li, Yixu Wang, Lingyu Meng, Yingchun Wang, Yan Teng*. **Manuscript under review, AAAI 2026**.
+*<u>Zhiyuan Ning</u>, Tianle Gu, Jiaxin Song, Shixin Hong, Lingyu Li, Huacan Liu, Jie Li, Yixu Wang, Lingyu Meng, Yingchun Wang, Yan Teng*. **Manuscript under review**.
 [nf-fa-file-pdf] [arXiv:2508.12733](https://arxiv.org/abs/2508.12733)
 
 ---
 ## Blog
 
-A collection of my thoughts, findings, and explorations in the world of computational linguistics and beyond.
+A collection of my thoughts, findings, and explorations in the world of artificial intelligence and beyond.
 
 ---
 ## Random Play

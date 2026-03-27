@@ -1,4 +1,1 @@
-- 2025-11-03 | [Mastering Neovim Configuration](./mastering-neovim-configuration.md) | tags: neovim, terminal, productivity
-- 2025-11-03 | [Building with React and TypeScript](./building-with-react-and-typescript.md) | tags: react, web-dev
-- 2025-11-02 | [Setting Up My New Digital Space](./setting-up-my-new-digital-space.md) | tags: react, web-dev, neovim
-
+- 2026-03-27 | [Attention Residuals: Another Step Towards a Highly Interconnected 3D Brain](./attn_res.md) | tags: attention, residual connections, new architectures

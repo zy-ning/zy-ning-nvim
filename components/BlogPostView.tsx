@@ -39,34 +39,21 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({ slug, onBack, post, 
             </button>
 
             {/* Post Header */}
-            <header className="mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold text-[var(--ctp-mauve)] mb-4 leading-tight">
-                    {post?.title || 'Loading...'}
-                </h1>
-                
-                <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--ctp-subtext0)]">
+            <header className="mb-6 pb-4 border-b border-[var(--ctp-surface0)]">
+                <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--ctp-subtext0)] mb-2">
                     {post?.date && (
-                        <div className="flex items-center gap-1.5">
-                            <Icon name="fas fa-calendar-alt" className="text-[var(--ctp-overlay0)]" />
-                            <time>{post.date}</time>
-                        </div>
+                        <span className="font-mono">{post.date}</span>
                     )}
                     
                     {post?.tags && post.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
+                        <>
+                            <span className="text-[var(--ctp-surface0)]">|</span>
                             {post.tags.map(tag => (
-                                <span
-                                    key={tag}
-                                    className="
-                                        px-2.5 py-0.5 rounded-md
-                                        bg-[var(--ctp-surface0)] text-[var(--ctp-teal)]
-                                        text-xs font-medium
-                                    "
-                                >
-                                    {tag}
+                                <span key={tag} className="text-[var(--ctp-teal)]">
+                                    #{tag}
                                 </span>
                             ))}
-                        </div>
+                        </>
                     )}
                 </div>
             </header>
