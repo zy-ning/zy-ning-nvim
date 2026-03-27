@@ -192,11 +192,20 @@ const parseBlogIndex = (markdown: string): BlogPostIndexItem[] => {
             const tags = match[4]
                 ? match[4].split(',').map(tag => tag.trim()).filter(Boolean)
                 : [];
+            const slug = match[3].trim();
+            
+            // Detect language from slug (ends with _en means English)
+            const language = slug.endsWith('_en') ? 'en' : 'zh';
+            // Get original slug (without language suffix)
+            const originalSlug = slug.endsWith('_en') ? slug.slice(0, -3) : slug;
+            
             posts.push({
                 date: match[1].trim(),
                 title: match[2].trim(),
-                slug: match[3].trim(),
+                slug: slug,
                 tags,
+                language,
+                originalSlug,
             });
         }
     });

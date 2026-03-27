@@ -9,6 +9,8 @@ export interface BlogPostIndexItem {
   date: string;
   slug: string;
   tags?: string[];
+  language?: 'zh' | 'en';
+  originalSlug?: string;
 }
 
 export interface Section {

@@ -1,1 +1,2 @@
-- 2026-03-27 | [Attention Residuals: Another Step Towards a Highly Interconnected 3D Brain](./attn_res.md) | tags: attention, residual connections, new architectures
+- 2026-03-27 | [Attention Residuals: Another Step Towards a Highly Interconnected 3D Brain (中文)](./attn_res.md) | tags: attention, residual connections, new architectures
+- 2026-03-27 | [Attention Residuals: Another Step Towards a Highly Interconnected 3D Brain (English)](./attn_res_en.md) | tags: attention, residual connections, new architectures

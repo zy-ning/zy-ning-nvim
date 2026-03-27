@@ -253,7 +253,7 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
           <div className="prose-content">
             {isBlogSection ? (
               activePostSlug ? (
-                <BlogPostView slug={activePostSlug} onBack={onBackToBlogIndex} post={activePost} onWordCountChange={onWordCountChange} />
+                <BlogPostView slug={activePostSlug} onBack={onBackToBlogIndex} post={activePost} onWordCountChange={onWordCountChange} blogPosts={blogPosts} />
               ) : (
                 <>
                   <h1>{title}</h1>

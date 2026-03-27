@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useMarkdownFile } from '../hooks/useMarkdownContent';
 import { Icon } from './Icon';
 import { type BlogPostIndexItem } from '../types';
@@ -8,10 +9,18 @@ interface BlogPostViewProps {
     onBack: () => void;
     post?: BlogPostIndexItem;
     onWordCountChange?: (count: number) => void;
+    blogPosts: BlogPostIndexItem[];
 }
 
-export const BlogPostView: React.FC<BlogPostViewProps> = ({ slug, onBack, post, onWordCountChange }) => {
+export const BlogPostView: React.FC<BlogPostViewProps> = ({ 
+    slug, 
+    onBack, 
+    post, 
+    onWordCountChange,
+    blogPosts 
+}) => {
     const content = useMarkdownFile(`/content/blog/${slug}.md`);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (content && onWordCountChange) {
@@ -21,22 +30,56 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({ slug, onBack, post, 
         }
     }, [content, onWordCountChange]);
 
+    // Find language variant
+    const currentPost = blogPosts.find(p => p.slug === slug);
+    const originalSlug = currentPost?.originalSlug || slug.replace(/_en$/, '');
+    const isEnglish = slug.endsWith('_en');
+    
+    // Find the other language version
+    const otherLanguageSlug = isEnglish 
+        ? originalSlug 
+        : blogPosts.find(p => p.originalSlug === originalSlug && p.language === 'en')?.slug;
+
+    const handleLanguageSwitch = () => {
+        if (otherLanguageSlug) {
+            navigate(`/blog/${otherLanguageSlug}`);
+        }
+    };
+
     return (
         <article className="animate-fadeIn">
-            {/* Back Button */}
-            <button
-                onClick={onBack}
-                className="
-                    group inline-flex items-center mb-6 px-3 py-1.5 rounded-lg
-                    text-[var(--ctp-subtext0)] text-sm font-medium
-                    bg-[var(--ctp-surface0)]/30 hover:bg-[var(--ctp-surface0)]
-                    transition-all duration-200 ease-out
-                    hover:-translate-x-0.5
-                "
-            >
-                <Icon name="fas fa-arrow-left" className="mr-2 text-xs transition-transform duration-200 group-hover:-translate-x-0.5" />
-                Back to Blog Index
-            </button>
+            {/* Back Button and Language Switch */}
+            <div className="flex items-center justify-between mb-6">
+                <button
+                    onClick={onBack}
+                    className="
+                        group inline-flex items-center px-3 py-1.5 rounded-lg
+                        text-[var(--ctp-subtext0)] text-sm font-medium
+                        bg-[var(--ctp-surface0)]/30 hover:bg-[var(--ctp-surface0)]
+                        transition-all duration-200 ease-out
+                        hover:-translate-x-0.5
+                    "
+                >
+                    <Icon name="fas fa-arrow-left" className="mr-2 text-xs transition-transform duration-200 group-hover:-translate-x-0.5" />
+                    Back to Blog Index
+                </button>
+
+                {otherLanguageSlug && (
+                    <button
+                        onClick={handleLanguageSwitch}
+                        className="
+                            inline-flex items-center px-3 py-1.5 rounded-lg
+                            text-[var(--ctp-text)] text-sm font-medium
+                            bg-[var(--ctp-surface0)] hover:bg-[var(--ctp-surface1)]
+                            border border-[var(--ctp-surface1)]
+                            transition-all duration-200 ease-out
+                        "
+                    >
+                        <Icon name="fas fa-language" className="mr-2 text-xs" />
+                        {isEnglish ? '中文' : 'English'}
+                    </button>
+                )}
+            </div>
 
             {/* Post Header */}
             <header className="mb-6 pb-4 border-b border-[var(--ctp-surface0)]">

@@ -24,7 +24,7 @@ Background: Scaling the **Depth** of DNN
 
 当每层 Jacobian 的谱范数略小于 $1$ 时，连乘后梯度会指数衰减；略大于 $1$ 时，则会指数放大。这就是经典的梯度消失/爆炸问题。
 
-ResNet ([Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385) ) 的关键观察是：即使使用了adaptive初始化和归一化，更深的**plain network **仍然会出现 **degradation problem**：层数加深后，不只是测试误差变差，连训练误差也会上升，这说明问题不只是过拟合，而是优化本身变难了。
+ResNet ([Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385) ) 的关键观察是：即使使用了adaptive初始化和归一化，更深的**plain network** 仍然会出现 **degradation problem**：层数加深后，不只是测试误差变差，连训练误差也会上升，这说明问题不只是过拟合，而是优化本身变难了。
 
 而一个合理的直觉是：更深的网络至少应该能模拟更浅的网络，只要新增层学会“什么都不做”即可。
 
@@ -75,10 +75,10 @@ $\Delta \mathcal{L}\approx\langle \nabla_\theta \mathcal{L}(\theta), \Delta\thet
 
 如果目标是输出零函数 $y(x)=0$，只需让 $x W_{up} $的每一项较小或者为负数
 
-但如果目标是恒等映射 $y(x)=x$，则需要 $W_{up}$对于$x$近似于$[1,-1]$,  $W_{down}$对于$x$近似于$\begin{bmatrix}
+但如果目标是恒等映射 $y(x)=x$，则需要 $W_{up}$对于$x$近似于$[1,-1]$,  $W_{down}$对于$x$近似于$$\begin{bmatrix}
 1\\
 -1
-\end{bmatrix}$,
+\end{bmatrix}$$,
 
 这说明：**“把输出选择性压到很小”通常比“精确实现恒等映射”更容易优化。**
 
@@ -86,7 +86,7 @@ $\Delta \mathcal{L}\approx\langle \nabla_\theta \mathcal{L}(\theta), \Delta\thet
 
 
 
-### Why is Residual **NOT **Enough?
+### Why is Residual **NOT** Enough?
 
 尽管残差连接显著提升了深层网络的可训练性，但它并没有彻底解决“深度上的信息如何组织和利用”这个问题。标准残差仍然是一个**单状态递推**：$h_l = h_{l-1} + f_{l-1}(h_{l-1}),$ 展开以后得到 $h_l = h_1 + \sum_{i=1}^{l-1} f_i(h_i).$
 
@@ -144,7 +144,7 @@ $M_{i\to l}(x)$ 表示第 $l$ 层对第 $i$ 个 source 的权重；
 
 * 若权重与输入无关，则写作 $M_{i\to l}$；
 
-* 所有方法都可以理解成在构造一个**下三角 depth-mixing matrix **$M \in \mathbb{R}^{L\times L}.$
+* 所有方法都可以理解成在构造一个**下三角 depth-mixing matrix** $M \in \mathbb{R}^{L\times L}.$
 
 于是三类方法其实就是三种不同的约束：
 
@@ -183,7 +183,7 @@ $$\left(\prod_{t=2}^{l}(1-g_t)\right)\odot h_1+\sum_{i=1}^{l-1}\left(g_{i+1}\odo
 \right)\odot v_i.
 $$
 
-这个式子很重要，因为它说明 Highway 虽然是 **dynamic, **但它仍然只是对 single-state recurrence 的加权修正, 它并没有让第 $l$ 层“直接点名访问”某个更早层 $v_i$，而是通过一连串门控乘积，**间接决定** earlier outputs 最终留下多少。所以它改善的是“递推如何混合”，没有直接决定“source set 是什么”。
+这个式子很重要，因为它说明 Highway 虽然是 **dynamic**, 但它仍然只是对 single-state recurrence 的加权修正, 它并没有让第 $l$ 层“直接点名访问”某个更早层 $v_i$，而是通过一连串门控乘积，**间接决定** earlier outputs 最终留下多少。所以它改善的是“递推如何混合”，没有直接决定“source set 是什么”。
 
 #### 1.3 ReZero / LayerScale / DeepNorm 也属于这一类
 
