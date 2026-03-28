@@ -48,8 +48,8 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
   const title = isBlogSection && activePost ? activePost.title : section.title;
 
   return (
-    <div className="flex-1 flex overflow-hidden bg-[var(--ctp-base)]">
-      <main className={`flex-1 p-4 md:p-8 overflow-y-auto ${zenMode ? 'flex justify-center' : ''}`}>
+    <div className="flex-1 flex flex-col overflow-hidden bg-[var(--ctp-base)]">
+      <main className={`flex-1 p-4 md:p-8 overflow-y-auto overflow-x-hidden ${zenMode ? 'flex justify-center' : ''}`}>
         <div className={zenMode ? 'w-full max-w-3xl' : 'w-full max-w-4xl mx-auto'}>
           <style>{`
             .prose-content {

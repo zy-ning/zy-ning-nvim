@@ -89,108 +89,68 @@ const App: React.FC = () => {
   const statusText = activePost ? `Blog > ${activePost.title}` : activeSection;
   const [wordCount, setWordCount] = useState<number>(0);
 
+  const MainContent = () => (
+    <>
+      <div className="flex flex-1 overflow-hidden">
+        {viewMode === 'sidebar' && !zenMode ? (
+          <Sidebar
+            sections={sectionTitles}
+            activeSection={activeSection}
+            onSelectSection={handleSelectSection}
+          />
+        ) : null}
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+            {viewMode === 'tab' && !zenMode ? (
+              <TabBar
+                sections={sectionTitles}
+                activeSection={activeSection}
+                onSelectSection={handleSelectSection}
+              />
+            ) : null}
+            <ContentWindow
+              section={currentSectionData}
+              activePostSlug={activePostSlug}
+              onSelectPost={handleSelectPost}
+              onBackToBlogIndex={handleBackToBlogIndex}
+              blogPosts={blogPosts}
+              zenMode={zenMode}
+              onWordCountChange={setWordCount}
+            />
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <div className={`
-      flex flex-col h-screen font-mono
+      flex flex-col h-screen font-mono overflow-hidden
       bg-[var(--ctp-base)] text-[var(--ctp-text)]
       transition-colors duration-300
     `}>
-      <Routes>
-        <Route path="/" element={
-          profileData ? (
-            <>
-              <div className="flex flex-1 overflow-hidden">
-                {viewMode === 'sidebar' && !zenMode ? (
-                  <Sidebar
-                    sections={sectionTitles}
-                    activeSection={activeSection}
-                    onSelectSection={handleSelectSection}
-                  />
-                ) : null}
-                <div className="flex-1 flex flex-col min-w-0">
-                    {viewMode === 'tab' && !zenMode ? (
-                      <TabBar
-                        sections={sectionTitles}
-                        activeSection={activeSection}
-                        onSelectSection={handleSelectSection}
-                      />
-                    ) : null}
-                    <ContentWindow
-                      section={currentSectionData}
-                      activePostSlug={activePostSlug}
-                      onSelectPost={handleSelectPost}
-                      onBackToBlogIndex={handleBackToBlogIndex}
-                      blogPosts={blogPosts}
-                      zenMode={zenMode}
-                      onWordCountChange={setWordCount}
-                    />
-                </div>
-              </div>
-              <StatusBar
-                theme={theme}
-                onToggleTheme={toggleTheme}
-                activeSection={statusText}
-                viewMode={viewMode}
-                onToggleViewMode={toggleViewMode}
-                zenMode={zenMode}
-                onToggleZenMode={toggleZenMode}
-                wordCount={wordCount}
-              />
-            </>
-          ) : (
-            <div className="flex-1 flex items-center justify-center">
-              <p>Loading profile...</p>
-            </div>
-          )
-        } />
-        <Route path="/blog/:slug" element={
-          profileData ? (
-            <>
-              <div className="flex flex-1 overflow-hidden">
-                {viewMode === 'sidebar' && !zenMode ? (
-                  <Sidebar
-                    sections={sectionTitles}
-                    activeSection="Blog"
-                    onSelectSection={handleSelectSection}
-                  />
-                ) : null}
-                <div className="flex-1 flex flex-col min-w-0">
-                    {viewMode === 'tab' && !zenMode ? (
-                      <TabBar
-                        sections={sectionTitles}
-                        activeSection="Blog"
-                        onSelectSection={handleSelectSection}
-                      />
-                    ) : null}
-                    <ContentWindow
-                      section={currentSectionData}
-                      activePostSlug={activePostSlug}
-                      onSelectPost={handleSelectPost}
-                      onBackToBlogIndex={handleBackToBlogIndex}
-                      blogPosts={blogPosts}
-                      zenMode={zenMode}
-                      onWordCountChange={setWordCount}
-                    />
-                </div>
-              </div>
-              <StatusBar
-                theme={theme}
-                onToggleTheme={toggleTheme}
-                activeSection={statusText}
-                viewMode={viewMode}
-                onToggleViewMode={toggleViewMode}
-                zenMode={zenMode}
-                onToggleZenMode={toggleZenMode}
-                wordCount={wordCount}
-              />
-            </>
-          ) : (
-            <div className="flex-1 flex items-center justify-center">
-              <p>Loading profile...</p>
-            </div>
-          )
-        } />
-      </Routes>
+      {profileData ? (
+        <>
+          <div className="flex-1 overflow-hidden">
+            <Routes>
+              <Route path="/" element={<MainContent />} />
+              <Route path="/blog/:slug" element={<MainContent />} />
+            </Routes>
+          </div>
+          <StatusBar
+            theme={theme}
+            onToggleTheme={toggleTheme}
+            activeSection={statusText}
+            viewMode={viewMode}
+            onToggleViewMode={toggleViewMode}
+            zenMode={zenMode}
+            onToggleZenMode={toggleZenMode}
+            wordCount={wordCount}
+          />
+        </>
+      ) : (
+        <div className="flex-1 flex items-center justify-center">
+          <p>Loading profile...</p>
+        </div>
+      )}
     </div>
   );
 };
