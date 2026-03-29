@@ -225,7 +225,8 @@ $\beta_{l-1}\in\mathbb{R}^m$ 相当于“把新信息写回 $m$ 个 stream”的
 
 把上式递推展开：
 
-$$\begin{aligned} H_{l-1} &= H_{l-2}A_{l-1} + u_{l-2}\beta_{l-2}^{\top} \\ &= u_{l-2}\beta_{l-2}^{\top}.\end{aligned}$$
+$$\begin{aligned} H_{l-1} &= H_{l-2}A_{l-1} + u_{l-2}\beta_{l-2}^{\top} \\ &= H_{l-3}A_{l-2}A_{l-1} + u_{l-3}\beta_{l-3}^{\top}A_{l-2}A_{l-1}
++  u_{l-2}\beta_{l-2}^{\top}.\end{aligned}$$
 
 继续展开可得
 $$H_{l-1} =

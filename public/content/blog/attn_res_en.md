@@ -206,7 +206,7 @@ $\beta_{l-1}\in\mathbb{R}^m$ is like a "key/write vector" that writes new inform
 
 Expanding the above:
 
-$$\begin{aligned} H_{l-1} &= H_{l-2}A_{l-1} + u_{l-2}\beta_{l-2}^{\top} \\ &= u_{l-2}\beta_{l-2}^{\top}.\end{aligned}$$
+$$\begin{aligned} H_{l-1} &= H_{l-2}A_{l-1} + u_{l-2}\beta_{l-2}^{\top} \\ &= H_{l-3}A_{l-2}A_{l-1} + u_{l-3}\beta_{l-3}^{\top}A_{l-2}A_{l-1} +  u_{l-2}\beta_{l-2}^{\top}.\end{aligned}$$
 
 Continuing to expand gives:
 $$H_{l-1} = H_0 A_{1:l-1} + \sum_{i=1}^{l-2} u_i,\beta_i^{\top} A_{i+1:l-1}, \text{ where } A_{i+1:l-1} \equiv A_{i+1}A_{i+2}\cdots A_{l-1}.$$
