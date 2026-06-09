@@ -233,6 +233,64 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
               background: linear-gradient(to right, transparent, var(--ctp-surface1), transparent);
               margin: 2em 0;
             }
+            .prose-content table {
+              display: block;
+              width: 100%;
+              max-width: max-content;
+              margin: 1.75em auto;
+              overflow-x: auto;
+              border-collapse: collapse;
+              font-size: 0.82rem;
+              line-height: 1.5;
+              border: 1px solid var(--ctp-surface0);
+              border-radius: 10px;
+              -webkit-overflow-scrolling: touch;
+            }
+            .prose-content thead {
+              background: var(--ctp-mantle);
+            }
+            .prose-content th {
+              text-align: left;
+              font-weight: 700;
+              color: var(--ctp-lavender);
+              padding: 0.6rem 0.95rem;
+              border-bottom: 2px solid var(--ctp-surface1);
+              white-space: nowrap;
+            }
+            .prose-content td {
+              padding: 0.55rem 0.95rem;
+              color: var(--ctp-text);
+              border-bottom: 1px solid var(--ctp-surface0);
+              white-space: nowrap;
+            }
+            .prose-content tbody tr:nth-child(even) {
+              background: var(--ctp-mantle);
+            }
+            .prose-content tbody tr:hover {
+              background: var(--ctp-surface0);
+            }
+            .prose-content tbody tr:last-child td {
+              border-bottom: none;
+            }
+            .prose-content td code {
+              white-space: nowrap;
+            }
+            .prose-content iframe {
+              display: block;
+              /* Break out wider than the text column so wide multi-panel
+                 figures have room; the figure itself scales to fill (it uses
+                 100vw/100vh internally + plotly responsive). */
+              width: min(1180px, 94vw);
+              height: auto;
+              position: relative;
+              left: 50%;
+              transform: translateX(-50%);
+              margin: 2em auto;
+              border: 1px solid var(--ctp-surface0);
+              border-radius: 10px;
+              background: var(--ctp-base);
+              box-shadow: var(--shadow-sm);
+            }
             .prose-content .profile-header {
               display: flex;
               gap: 2rem;

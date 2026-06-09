@@ -1,0 +1,199 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1780915527712,
+  "projectRoot": "/Users/ningzhiyuan/Wksp/my/zy-ning-nvim",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "react",
+        "version": "19.2.0",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.0",
+        "category": "frontend"
+      },
+      {
+        "name": "vite",
+        "version": "6.2.0",
+        "category": "build"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "components",
+      "public"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "components": {
+      "path": "components",
+      "purpose": "UI components",
+      "fileCount": 7,
+      "lastAccessed": 1780915527697,
+      "keyFiles": [
+        "BlogIndexView.tsx",
+        "BlogPostView.tsx",
+        "ContentWindow.tsx",
+        "Icon.tsx",
+        "Sidebar.tsx"
+      ]
+    },
+    "dist": {
+      "path": "dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 1,
+      "lastAccessed": 1780915527697,
+      "keyFiles": [
+        "index.html"
+      ]
+    },
+    "hooks": {
+      "path": "hooks",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1780915527702,
+      "keyFiles": [
+        "useMarkdownContent.ts",
+        "useTheme.ts"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 0,
+      "lastAccessed": 1780915527702,
+      "keyFiles": []
+    },
+    "dist/assets": {
+      "path": "dist/assets",
+      "purpose": "Static assets",
+      "fileCount": 1,
+      "lastAccessed": 1780915527703,
+      "keyFiles": [
+        "index-Cqk4n1jA.js"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "public/content/blog/nano-scalemb.md",
+      "accessCount": 18,
+      "lastAccessed": 1780928289195,
+      "type": "file"
+    },
+    {
+      "path": "public/content/blog/index.md",
+      "accessCount": 7,
+      "lastAccessed": 1780934772116,
+      "type": "file"
+    },
+    {
+      "path": "components/ContentWindow.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1780917043322,
+      "type": "file"
+    },
+    {
+      "path": "public/content/profile.md",
+      "accessCount": 2,
+      "lastAccessed": 1780915675012,
+      "type": "file"
+    },
+    {
+      "path": "App.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1780915653088,
+      "type": "file"
+    },
+    {
+      "path": "constants.ts",
+      "accessCount": 1,
+      "lastAccessed": 1780915653486,
+      "type": "file"
+    },
+    {
+      "path": "types.ts",
+      "accessCount": 1,
+      "lastAccessed": 1780915653695,
+      "type": "file"
+    },
+    {
+      "path": "components/BlogPostView.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1780915959697,
+      "type": "file"
+    },
+    {
+      "path": "hooks/useMarkdownContent.ts",
+      "accessCount": 1,
+      "lastAccessed": 1780915969262,
+      "type": "file"
+    },
+    {
+      "path": "index.html",
+      "accessCount": 1,
+      "lastAccessed": 1780916463710,
+      "type": "file"
+    },
+    {
+      "path": "hooks/useTheme.ts",
+      "accessCount": 1,
+      "lastAccessed": 1780917951375,
+      "type": "file"
+    },
+    {
+      "path": "components/BlogIndexView.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1780934743231,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

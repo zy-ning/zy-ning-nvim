@@ -75,9 +75,9 @@ I am currently an undergraduate student at Global College, **Shanghai Jiao Tong 
 
 I am honored to have been accepted into the **PhD program at Fudan NLP & SII**, commencing Fall 2026. My doctoral research will center on advancing the architectural design and computational infrastructure of large-scale models, including LLMs, MLLMs, and Diffusion Models, with a focus on improving their efficiency, scalability, and practical deployment in real-world applications.
 
-### News
+<!-- ### News
 
-*[Oct 2025]:* My paper on **Cascade Self-Speculative Decoding (CAS-Spec)** has been accepted to **NeurIPS 2025**!
+*[Oct 2025]:* My paper on **Cascade Self-Speculative Decoding (CAS-Spec)** has been accepted to **NeurIPS 2025**! -->
 
 
 
@@ -120,6 +120,10 @@ I am honored to have been accepted into the **PhD program at Fudan NLP & SII**, 
 ## Publications
 
 
+
+#### Faster Than Flash: Exploiting Attention Sparsity for Efficient Long-Context Decoding
+*Zhigeng Liu, <u>Zhiyuan Ning</u>, Ruixiao Li, Xiaoran Liu, Yuerong Song, Min Zhang, Ziwei He, Xipeng Qiu*. **ICML 2026 Poster**.
+[nf-fa-link] [icml.cc](https://icml.cc/virtual/2026/poster/61344)
 
 #### MOVA: Towards Scalable and Synchronized Video–Audio Generation
 *SII-OpenMOSS Team*.
