@@ -18,6 +18,14 @@ export interface Section {
   content: string;
 }
 
+export interface OutlineHeading {
+  id: string;
+  text: string;
+  level: number;
+  /** Live reference to the rendered heading element, used for scroll + active tracking. */
+  el?: HTMLElement;
+}
+
 export interface ProfileData {
   name: string;
   contactInfo: ContactInfo[];

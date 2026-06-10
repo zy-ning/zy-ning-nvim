@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Sidebar } from './components/Sidebar';
 import { TabBar } from './components/TabBar';
@@ -6,6 +6,7 @@ import { ContentWindow } from './components/ContentWindow';
 import { StatusBar } from './components/StatusBar';
 import { useProfileData, useBlogIndex } from './hooks/useMarkdownContent';
 import { useTheme } from './hooks/useTheme';
+import { type OutlineHeading } from './types';
 
 const isMobileDevice = () => {
   if (typeof window === 'undefined') return false;
@@ -88,6 +89,13 @@ const App: React.FC = () => {
   const activePost = blogPosts.find(p => p.slug === activePostSlug);
   const statusText = activePost ? `Blog > ${activePost.title}` : activeSection;
   const [wordCount, setWordCount] = useState<number>(0);
+  const [headings, setHeadings] = useState<OutlineHeading[]>([]);
+  const mainScrollRef = useRef<HTMLElement>(null);
+
+  // Clear the outline whenever we switch posts so stale headings don't linger.
+  useEffect(() => {
+    setHeadings([]);
+  }, [activePostSlug]);
 
   return (
     <div className={`
@@ -123,6 +131,8 @@ const App: React.FC = () => {
                       blogPosts={blogPosts}
                       zenMode={zenMode}
                       onWordCountChange={setWordCount}
+                      onHeadingsChange={setHeadings}
+                      scrollRef={mainScrollRef}
                     />
                 </div>
               </div>
@@ -152,6 +162,8 @@ const App: React.FC = () => {
                     sections={sectionTitles}
                     activeSection="Blog"
                     onSelectSection={handleSelectSection}
+                    headings={headings}
+                    scrollRef={mainScrollRef}
                   />
                 ) : null}
                 <div className="flex-1 flex flex-col min-w-0">
@@ -170,6 +182,8 @@ const App: React.FC = () => {
                       blogPosts={blogPosts}
                       zenMode={zenMode}
                       onWordCountChange={setWordCount}
+                      onHeadingsChange={setHeadings}
+                      scrollRef={mainScrollRef}
                     />
                 </div>
               </div>

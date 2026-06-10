@@ -1,13 +1,17 @@
 import React from 'react';
 import { Icon } from './Icon';
+import { BlogOutline } from './BlogOutline';
+import { type OutlineHeading } from '../types';
 
 interface SidebarProps {
   sections: string[];
   activeSection: string;
   onSelectSection: (section: string) => void;
+  headings?: OutlineHeading[];
+  scrollRef?: React.RefObject<HTMLElement | null>;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, onSelectSection }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, onSelectSection, headings = [], scrollRef }) => {
   return (
     <aside className={`
       w-full md:w-52 flex-shrink-0
@@ -75,7 +79,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ sections, activeSection, onSel
           );
         })}
       </nav>
-      
+
+      <BlogOutline headings={headings} scrollRef={scrollRef} />
+
       <div className="hidden md:block px-3 py-2 border-t border-[var(--ctp-surface0)] text-xs text-[var(--ctp-overlay0)]">
         <div className="flex justify-between">
           <span>{sections.length} items</span>

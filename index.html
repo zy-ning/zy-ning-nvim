@@ -92,8 +92,24 @@
         font-family: "Fira Code", "Maple Mono NF CN", "Maple Mono", monospace;
       }
 
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        /* App shell owns its own scroll container (the <main> content area).
+           Lock the document so wheel events over non-scrollable chrome (e.g.
+           the status bar) can't chain up and scroll the whole page. */
+        overflow: hidden;
+        overscroll-behavior: none;
+      }
+
       html {
         scroll-behavior: smooth;
+      }
+
+      #root {
+        height: 100%;
+        overflow: hidden;
       }
 
       .scrollbar-hide::-webkit-scrollbar {

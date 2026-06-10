@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { type Section, type BlogPostIndexItem } from "../types";
+import { type Section, type BlogPostIndexItem, type OutlineHeading } from "../types";
 import { BlogIndexView } from "./BlogIndexView";
 import { BlogPostView } from "./BlogPostView";
 
@@ -11,6 +11,8 @@ interface ContentWindowProps {
   blogPosts: BlogPostIndexItem[];
   zenMode?: boolean;
   onWordCountChange?: (count: number) => void;
+  onHeadingsChange?: (headings: OutlineHeading[]) => void;
+  scrollRef?: React.RefObject<HTMLElement | null>;
 }
 
 export const ContentWindow: React.FC<ContentWindowProps> = ({
@@ -21,6 +23,8 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
   blogPosts,
   zenMode = false,
   onWordCountChange,
+  onHeadingsChange,
+  scrollRef,
 }) => {
   useEffect(() => {
     if (section && onWordCountChange) {
@@ -49,7 +53,7 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
 
   return (
     <div className="flex-1 flex overflow-hidden bg-[var(--ctp-base)]">
-      <main className={`flex-1 p-4 md:p-8 overflow-y-auto ${zenMode ? 'flex justify-center' : ''}`}>
+      <main ref={scrollRef} className={`flex-1 p-4 md:p-8 overflow-y-auto overscroll-contain ${zenMode ? 'flex justify-center' : ''}`}>
         <div className={zenMode ? 'w-full max-w-3xl' : 'w-full max-w-4xl mx-auto'}>
           <style>{`
             .prose-content {
@@ -65,6 +69,10 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
               margin-top: 1.25em;
               line-height: 1.2;
               letter-spacing: -0.02em;
+            }
+            .prose-content h1, .prose-content h2,
+            .prose-content h3, .prose-content h4 {
+              scroll-margin-top: 1.5rem;
             }
             .prose-content h1 { 
               font-size: clamp(1.75rem, 5vw, 2.25rem); 
@@ -311,7 +319,7 @@ export const ContentWindow: React.FC<ContentWindowProps> = ({
           <div className="prose-content">
             {isBlogSection ? (
               activePostSlug ? (
-                <BlogPostView slug={activePostSlug} onBack={onBackToBlogIndex} post={activePost} onWordCountChange={onWordCountChange} blogPosts={blogPosts} />
+                <BlogPostView slug={activePostSlug} onBack={onBackToBlogIndex} post={activePost} onWordCountChange={onWordCountChange} onHeadingsChange={onHeadingsChange} blogPosts={blogPosts} />
               ) : (
                 <>
                   <h1>{title}</h1>

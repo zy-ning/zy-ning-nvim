@@ -1,26 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMarkdownFile } from '../hooks/useMarkdownContent';
 import { Icon } from './Icon';
-import { type BlogPostIndexItem } from '../types';
+import { type BlogPostIndexItem, type OutlineHeading } from '../types';
 
 interface BlogPostViewProps {
     slug: string;
     onBack: () => void;
     post?: BlogPostIndexItem;
     onWordCountChange?: (count: number) => void;
+    onHeadingsChange?: (headings: OutlineHeading[]) => void;
     blogPosts: BlogPostIndexItem[];
 }
 
-export const BlogPostView: React.FC<BlogPostViewProps> = ({ 
-    slug, 
-    onBack, 
-    post, 
+export const BlogPostView: React.FC<BlogPostViewProps> = ({
+    slug,
+    onBack,
+    post,
     onWordCountChange,
-    blogPosts 
+    onHeadingsChange,
+    blogPosts
 }) => {
     const content = useMarkdownFile(`/content/blog/${slug}.md`);
     const navigate = useNavigate();
+    const contentRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (content && onWordCountChange) {
@@ -29,6 +32,44 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({
             onWordCountChange(count);
         }
     }, [content, onWordCountChange]);
+
+    // Extract headings from the rendered post and assign stable anchor ids so
+    // the outline panel can link to them.
+    useEffect(() => {
+        const container = contentRef.current;
+        if (!container || !content || !onHeadingsChange) return;
+
+        const slugify = (text: string, used: Set<string>): string => {
+            const base =
+                text
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[^\w一-鿿\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '') || 'section';
+            let id = base;
+            let i = 1;
+            while (used.has(id)) id = `${base}-${i++}`;
+            used.add(id);
+            return id;
+        };
+
+        const used = new Set<string>();
+        const els = Array.from(
+            container.querySelectorAll('h1, h2, h3, h4')
+        ) as HTMLElement[];
+
+        const headings: OutlineHeading[] = els.map((el) => {
+            const text = el.textContent?.trim() || '';
+            if (!el.id) el.id = slugify(text, used);
+            else used.add(el.id);
+            el.style.scrollMarginTop = '1.5rem';
+            return { id: el.id, text, level: Number(el.tagName[1]), el };
+        });
+
+        onHeadingsChange(headings);
+    }, [content, onHeadingsChange]);
 
     // Find language variant
     const currentPost = blogPosts.find(p => p.slug === slug);
@@ -103,9 +144,10 @@ export const BlogPostView: React.FC<BlogPostViewProps> = ({
 
             {/* Post Content */}
             {content ? (
-                <div 
+                <div
+                    ref={contentRef}
                     className="prose-content"
-                    dangerouslySetInnerHTML={{ __html: content }} 
+                    dangerouslySetInnerHTML={{ __html: content }}
                 />
             ) : (
                 <div className="flex items-center justify-center py-12">

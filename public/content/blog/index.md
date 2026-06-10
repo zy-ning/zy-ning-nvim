@@ -1,4 +1,4 @@
-- 2026-06-08 | [开源 nano-scalemb：Engram 记忆真的会「记住」吗？ (中文)](./nano-scalemb.md) | tags: nano-scalemb, interpretability, n-gram memory, transformers, open source
-- 2026-06-08 | [Does Engram Memory Actually Remember? Releasing nano-scalemb (English)](./nano-scalemb_en.md) | tags: nano-scalemb, interpretability, n-gram memory, transformers, open source
+- 2026-06-08 | [开源 nano-scalemb：Engram 记忆，真的在记吗？ (中文)](./nano-scalemb.md) | embedding, interpretability, new architectures
+- 2026-06-08 | [Does Engram Memory Actually Remember? Releasing nano-scalemb (English)](./nano-scalemb_en.md) | tags: embedding, interpretability, new architectures
 - 2026-03-27 | [Attention Residuals: Another Step Towards a Highly Interconnected 3D Brain (中文)](./attn_res.md) | tags: attention, residual connections, new architectures
 - 2026-03-27 | [Attention Residuals: Another Step Towards a Highly Interconnected 3D Brain (English)](./attn_res_en.md) | tags: attention, residual connections, new architectures
