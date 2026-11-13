@@ -51,7 +51,7 @@ Zhiyuan Ning
 <a style="color: var(--ctp-subtext0);" href="https://www.linkedin.com/in/zhiyuan-ning">[nf-fa-linkedin] zhiyuan-ning</a> <br/>
 [nf-fa-phone] +86 18034762891 -->
 
-<a style="color: var(--ctp-subtext0); font-size: 20px;" href="mailto:telegraphpolehead@sjtu.edu.cn">[nf-fa-envelope]</a> <span style="width: 0.5rem; display: inline-block;"></span>
+<a style="color: var(--ctp-subtext0); font-size: 20px;" href="mailto:zhiyuan.ning@sii.edu.cn">[nf-fa-envelope]</a> <span style="width: 0.5rem; display: inline-block;"></span>
 <a style="color: var(--ctp-subtext0); font-size: 20px;" href="https://github.com/zy-ning">[nf-fa-github]</a> <span style="width: 0.5rem; display: inline-block;"></span>
 <a style="color: var(--ctp-subtext0); font-size: 20px;" href="https://scholar.google.com/citations?user=wX_8zE4AAAAJ&hl=en">[nf-fa-google]</a> <span style="width: 0.5rem; display: inline-block;"></span>
 <a style="color: var(--ctp-subtext0); font-size: 20px;" href="https://www.linkedin.com/in/zhiyuan-ning-79a8282a6">[nf-fa-linkedin]</a>
@@ -71,23 +71,31 @@ Zhiyuan Ning
 
 ### Bio
 
-I am currently an undergraduate student at Global College, **Shanghai Jiao Tong University**, pursuing a BSE in Electrical and Computer Engineering. I've been deeply involved in research on large language models (LLMs) and multimodal large language models (MLLMs), through internships at prestigious institutions such as the *Shanghai Artificial Intelligence Laboratory* and *China Telecom's Institute of Artificial Intelligence (TeleAI)*.
+I am a PhD student at **Fudan University (Fudan NLP)** and the **Shanghai Innovation Institute (SII)**. My research focuses on model architectures and efficient training and inference for large language models, multimodal models, and diffusion models.
 
-I am honored to have been accepted into the **PhD program at Fudan NLP & SII**, commencing Fall 2026. My doctoral research will center on advancing the architectural design and computational infrastructure of large-scale models, including LLMs, MLLMs, and Diffusion Models, with a focus on improving their efficiency, scalability, and practical deployment in real-world applications.
+I received my BSE in Electrical and Computer Engineering from **Shanghai Jiao Tong University**. Previously, I was an ACE intern on **Xiaohongshu's dots Pretraining Architecture Team**, working on MoE architectures, optimization methods, and architecture exploration. I also conducted research at the *Shanghai Artificial Intelligence Laboratory* and *China Telecom's Institute of Artificial Intelligence (TeleAI)*.
 
-<!-- ### News
+### News
 
-*[Oct 2025]:* My paper on **Cascade Self-Speculative Decoding (CAS-Spec)** has been accepted to **NeurIPS 2025**! -->
+*[Oct 2026]:* Our paper [**NimbleMoE**](https://aclanthology.org/2026.emnlp-main.2036/), on collaboration-aware expert merging with sparse compensation, is published in the **EMNLP 2026 Main Conference** proceedings.
 
+*[Jul 2026]:* Our paper [**Faster Than Flash**](https://icml.cc/virtual/2026/poster/61344), on exploiting attention sparsity for efficient long-context decoding, is an **ICML 2026 Poster**.
 
+*[Feb 2026]:* Our [**MOVA**](https://arxiv.org/abs/2602.08794) technical report with the **SII-OpenMOSS Team** is now available, introducing an open-source model for scalable, synchronized video–audio generation.
+
+*[Oct 2025]:* My paper on [**Cascade Adaptive Self-Speculative Decoding (CAS-Spec)**](https://openreview.net/pdf/7be7febdbc687ff1d863bbeaf1f37fb1b683f4bc.pdf) has been accepted to **NeurIPS 2025**!
 
 ---
 ## Experience
 
 ### Education
 
+#### Fudan University & Shanghai Innovation Institute (SII)
+**PhD Student**, Fudan NLP & SII | Sep 2026 - Present
+- Research on model architectures and efficient training and inference for large language models, multimodal models, and diffusion models.
+
 #### Shanghai Jiao Tong University
-**BSE in Electrical and Computer Engineering**, UM-SJTU Joint Institute | Sep 2022 - Aug 2026 (expected)
+**BSE in Electrical and Computer Engineering**, UM-SJTU Joint Institute | Sep 2022 - Aug 2026
 - SJTU JI Honors Research Program certified
 - Extraordinary Scholarship (full scholarship) recipient
 
@@ -96,6 +104,12 @@ I am honored to have been accepted into the **PhD program at Fudan NLP & SII**, 
 - Second Prize in the Chinese Physics Olympiad (CPhO)
 
 ### Internships
+
+#### LLM Architecture Research Intern (ACE)
+**Xiaohongshu, dots Pretraining Architecture Team** | May 2026 - Sep 2026
+- Contributed to architecture validation and feature integration for **LatentMoE** and **Stable LatentMoE**, across a scaling ladder up to **100B parameters**.
+- Explored alternatives to Muon and related optimizer variants for LLM pretraining, including **SOAP-Muon**, **Mousse**, and **MuonH**.
+- Investigated emerging model architectures, including **Engram** and **Looped Transformers**.
 
 #### Multimodal AI Research Intern
 **The Institute of Artificial Intelligence, China Telecom (TeleAI)** | *Shanghai, China* | Jan 2025 - Aug 2025
@@ -119,7 +133,9 @@ I am honored to have been accepted into the **PhD program at Fudan NLP & SII**, 
 ---
 ## Publications
 
-
+#### NimbleMoE: Collaboration-Aware Expert Merging with Sparse Compensation for Efficient Mixture-of-Experts LLMs
+*<u>Zhiyuan Ning</u>, Xiaoran Liu, Ruge Xu, Xinfei Guo, Ziwei He, Xipeng Qiu*. **EMNLP 2026 Main Conference**.
+[nf-fa-file-pdf] [ACL Anthology](https://aclanthology.org/2026.emnlp-main.2036/)
 
 #### Faster Than Flash: Exploiting Attention Sparsity for Efficient Long-Context Decoding
 *Zhigeng Liu, <u>Zhiyuan Ning</u>, Ruixiao Li, Xiaoran Liu, Yuerong Song, Min Zhang, Ziwei He, Xipeng Qiu*. **ICML 2026 Poster**.

@@ -1,202 +1,65 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
+import { BlogFigure } from './BlogFigure';
+import { Link } from 'react-router-dom';
 import { type BlogPostIndexItem } from '../types';
-import { Icon } from './Icon';
+import './writing.css';
 
 interface BlogIndexViewProps {
-    posts: BlogPostIndexItem[];
-    onSelectPost: (slug: string) => void;
+  posts: BlogPostIndexItem[];
+  onSelectPost: (slug: string) => void;
 }
+
+const cleanTitle = (title: string) => title.replace(/\s*\((?:中文|English)\)$/, '');
+const languageName = (post: BlogPostIndexItem) => post.language === 'en' || post.slug.endsWith('_en') ? 'English' : '中文';
 
 export const BlogIndexView: React.FC<BlogIndexViewProps> = ({ posts, onSelectPost }) => {
-    const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const groups = useMemo(() => {
+    const byArticle = new Map<string, BlogPostIndexItem[]>();
+    posts.forEach(post => {
+      const key = post.originalSlug || post.slug.replace(/_en$/, '');
+      byArticle.set(key, [...(byArticle.get(key) || []), post]);
+    });
+    return Array.from(byArticle, ([key, variants]) => {
+      const sorted = [...variants].sort((a, b) => Number(languageName(b) === 'English') - Number(languageName(a) === 'English'));
+      return { key, primary: sorted[0], variants: sorted, tags: Array.from(new Set(variants.flatMap(p => p.tags || []))) };
+    }).sort((a, b) => b.primary.date.localeCompare(a.primary.date));
+  }, [posts]);
+  const tags = useMemo(() => Array.from(new Set(groups.flatMap(group => group.tags))).sort(), [groups]);
+  const filtered = selectedTag ? groups.filter(group => group.tags.includes(selectedTag)) : groups;
 
-    // Group posts by originalSlug to handle multiple languages
-    const groupedPosts = useMemo(() => {
-        const groups = new Map<string, BlogPostIndexItem[]>();
-        
-        posts.forEach(post => {
-            const key = post.originalSlug || post.slug;
-            if (!groups.has(key)) {
-                groups.set(key, []);
-            }
-            groups.get(key)!.push(post);
-        });
-        
-        // Return array of grouped posts with primary (non-English) post first
-        return Array.from(groups.entries()).map(([originalSlug, variants]) => {
-            // Sort: Chinese (non _en) first, then English (_en)
-            const sorted = variants.sort((a, b) => {
-                if (a.slug.endsWith('_en') && !b.slug.endsWith('_en')) return 1;
-                if (!a.slug.endsWith('_en') && b.slug.endsWith('_en')) return -1;
-                return 0;
-            });
-            return {
-                primary: sorted[0],
-                variants: sorted,
-                hasMultipleLanguages: sorted.length > 1
-            };
-        });
-    }, [posts]);
+  // Preserve native link behavior for new tabs, copy-link, and modified clicks.
+  const selectPost = (event: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    onSelectPost(slug);
+  };
 
-    const allTags = useMemo(() => {
-        const tagSet = new Set<string>();
-        posts.forEach(post => {
-            post.tags?.forEach(tag => tagSet.add(tag));
-        });
-        return Array.from(tagSet).sort();
-    }, [posts]);
-
-    const filteredPosts = useMemo(() => {
-        if (!selectedTag) return groupedPosts;
-        return groupedPosts.filter(({ variants }) => 
-            variants.some(post => post.tags?.includes(selectedTag))
-        );
-    }, [groupedPosts, selectedTag]);
-
-    if (posts.length === 0) {
-        return (
-            <div className="text-center py-12">
-                <Icon name="fas fa-inbox" className="text-4xl text-[var(--ctp-surface0)] mb-3" />
-                <p className="text-[var(--ctp-subtext0)]">No blog posts found</p>
+  return <div className="writing-index">
+    {tags.length > 0 && <div className="writing-filters" aria-label="Filter writing by topic">
+      <span className="writing-filter-label">Explore by topic</span>
+      <div className="writing-filter-options">
+        {[null, ...tags].map(tag => <button type="button" key={tag || 'all'} className={`writing-filter ${selectedTag === tag ? 'is-selected' : ''}`} aria-pressed={selectedTag === tag} onClick={() => setSelectedTag(tag)}>
+          {tag || 'All notes'}<span>{tag ? groups.filter(group => group.tags.includes(tag)).length : groups.length}</span>
+        </button>)}
+      </div>
+    </div>}
+    <p className="writing-result-count" aria-live="polite">{filtered.length} {filtered.length === 1 ? 'essay' : 'essays'}{selectedTag ? ` / ${selectedTag}` : ' / experiments, questions & observations'}</p>
+    <div className="writing-list">
+      {filtered.map(({ key, primary, variants, tags: articleTags }, index) => {
+        return <article className="writing-row" key={key}>
+          <div className="writing-row-date"><span className="writing-row-number">{String(index + 1).padStart(2, '0')}</span><time dateTime={primary.date}>{primary.date.replaceAll('-', '.')}</time></div>
+          <div className="writing-row-main">
+            <h2 lang={languageName(primary) === 'English' ? 'en' : 'zh'}><Link to={`/blog/${primary.slug}`} onClick={e => selectPost(e, primary.slug)}>{cleanTitle(primary.title)}</Link></h2>
+            <div className="writing-tags">{articleTags.map(tag => <span key={tag}>{tag}</span>)}</div>
+            <div className="writing-languages" aria-label={`Read ${cleanTitle(primary.title)}`}>
+              {variants.map(variant => <Link key={variant.slug} to={`/blog/${variant.slug}`} onClick={e => selectPost(e, variant.slug)} lang={languageName(variant) === 'English' ? 'en' : 'zh'}>{languageName(variant)}<span aria-hidden="true">↗</span></Link>)}
             </div>
-        );
-    }
-
-    return (
-        <div className="mt-8">
-            {allTags.length > 0 && (
-                <div className="mb-8">
-                    <div className="flex items-center gap-2 mb-4">
-                        <div className="w-8 h-8 rounded-lg bg-[var(--ctp-surface0)] flex items-center justify-center">
-                            <Icon name="fas fa-tags" className="text-[var(--ctp-subtext0)] text-sm" />
-                        </div>
-                        <span className="text-[var(--ctp-subtext0)] text-sm font-medium">Filter by tag</span>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                        <TagButton
-                            label="All"
-                            count={groupedPosts.length}
-                            isActive={selectedTag === null}
-                            onClick={() => setSelectedTag(null)}
-                        />
-                        {allTags.map(tag => (
-                            <TagButton
-                                key={tag}
-                                label={tag}
-                                count={groupedPosts.filter(({ variants }) => 
-                                    variants.some(post => post.tags?.includes(tag))
-                                ).length}
-                                isActive={selectedTag === tag}
-                                onClick={() => setSelectedTag(tag)}
-                            />
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            <div className="space-y-3">
-                {filteredPosts.map(({ primary, variants, hasMultipleLanguages }, index) => (
-                    <article
-                        key={primary.slug}
-                        onClick={() => onSelectPost(primary.slug)}
-                        className="group cursor-pointer"
-                        style={{ animationDelay: `${index * 50}ms` }}
-                    >
-                        <div className="
-                            relative p-4 rounded-xl
-                            bg-[var(--ctp-surface0)]/30
-                            border border-[var(--ctp-surface0)]
-                            transition-all duration-300 ease-out
-                            hover:bg-[var(--ctp-surface0)]/60
-                            hover:border-[var(--ctp-surface1)]
-                            hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)]
-                            hover:-translate-y-0.5
-                        ">
-                            <div className="flex items-start gap-4">
-                                <div className="flex-shrink-0 pt-1">
-                                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[var(--ctp-mauve)]/20 to-[var(--ctp-pink)]/20 flex items-center justify-center group-hover:from-[var(--ctp-mauve)]/30 group-hover:to-[var(--ctp-pink)]/30 transition-all duration-300">
-                                        <Icon name="fas fa-file-alt" className="text-[var(--ctp-mauve)] text-sm" />
-                                    </div>
-                                </div>
-                                
-                                <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-3 mb-1.5">
-                                        <time className="text-xs font-medium text-[var(--ctp-subtext0)] bg-[var(--ctp-surface0)] px-2 py-0.5 rounded">
-                                            {primary.date}
-                                        </time>
-                                        
-                                        {hasMultipleLanguages && (
-                                            <span className="text-xs px-2 py-0.5 rounded bg-[var(--ctp-teal)]/20 text-[var(--ctp-teal)] font-medium flex items-center gap-1">
-                                                <Icon name="fas fa-globe" className="text-[10px]" />
-                                                {variants.map(v => v.language === 'en' ? 'EN' : '中文').join(' / ')}
-                                            </span>
-                                        )}
-                                    </div>
-                                    
-                                    <h3 className="text-lg font-semibold text-[var(--ctp-text)] group-hover:text-[var(--ctp-mauve)] transition-colors duration-200 mb-2 line-clamp-2">
-                                        {primary.title.replace(/ \(.*?\)$/, '')}
-                                    </h3>
-                                    
-                                    {primary.excerpt && (
-                                        <p className="text-sm text-[var(--ctp-subtext0)] line-clamp-2 mb-3">
-                                            {primary.excerpt}
-                                        </p>
-                                    )}
-                                    
-                                    {primary.tags && primary.tags.length > 0 && (
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {primary.tags.map(tag => (
-                                                <span
-                                                    key={tag}
-                                                    className="text-xs px-2 py-0.5 rounded-md bg-[var(--ctp-surface1)]/50 text-[var(--ctp-teal)] font-medium"
-                                                >
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                                
-                                <div className="flex-shrink-0 self-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                    <Icon name="fas fa-arrow-right" className="text-[var(--ctp-mauve)]" />
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                ))}
-            </div>
-
-            {filteredPosts.length === 0 && selectedTag && (
-                <div className="text-center py-12">
-                    <Icon name="fas fa-search" className="text-3xl text-[var(--ctp-surface0)] mb-3" />
-                    <p className="text-[var(--ctp-subtext0)]">
-                        No posts found with tag "{selectedTag}"
-                    </p>
-                </div>
-            )}
-        </div>
-    );
+          </div>
+          <Link className="writing-row-figure" to={`/blog/${primary.slug}`} onClick={e => selectPost(e, primary.slug)} aria-label={`Read ${cleanTitle(primary.title)}`}><BlogFigure slug={primary.slug} /><span className="figure-read-label">Read note <span aria-hidden="true">↗</span></span></Link>
+        </article>;
+      })}
+    </div>
+    {filtered.length === 0 && <div className="writing-empty"><p>{selectedTag ? `No essays on “${selectedTag}” yet.` : 'The notebook is quiet for now.'}</p>{selectedTag && <button type="button" onClick={() => setSelectedTag(null)}>Browse all notes <span aria-hidden="true">↗</span></button>}</div>}
+  </div>;
 };
-
-interface TagButtonProps {
-    label: string;
-    count: number;
-    isActive: boolean;
-    onClick: () => void;
-}
-
-const TagButton: React.FC<TagButtonProps> = ({ label, count, isActive, onClick }) => (
-    <button
-        onClick={onClick}
-        className={`
-            px-3 py-1.5 rounded-lg text-sm font-medium
-            transition-all duration-200 ease-out
-            ${isActive
-                ? 'bg-[var(--ctp-lavender)] text-[var(--ctp-base)] shadow-md'
-                : 'bg-[var(--ctp-surface0)]/50 text-[var(--ctp-subtext0)] hover:bg-[var(--ctp-surface0)] hover:text-[var(--ctp-text)]'
-            }
-        `}
-    >
-        {label} <span className="opacity-60 text-xs">({count})</span>
-    </button>
-);

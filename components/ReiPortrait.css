@@ -1,0 +1,24 @@
+.rei-portrait {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 0;
+  container-type: inline-size;
+}
+.rei-particles {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.rei-ascii-fallback {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  color: var(--blue);
+  font-family: var(--mono);
+  font-size: calc(100cqi / var(--rei-columns) / .7);
+  line-height: 1.18;
+  text-align: left;
+  white-space: pre;
+}
+.rei-ascii-fallback[hidden] { display: none; }
