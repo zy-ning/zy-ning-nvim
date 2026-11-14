@@ -3,9 +3,9 @@
 A terminal-inspired blog and portfolio site built with React, TypeScript, and Vite.
 
 The interface uses a Neovim-style explorer, buffer bar, and status line with
-Catppuccin-inspired Mocha and Latte themes. The profile keeps the original Rei
-portrait as a subtle particle animation generated from its original
-braille characters. Reduced-motion preferences keep it still. The original
+Catppuccin-inspired Mocha and Latte themes. The original blue Rei portrait reveals
+its braille characters, diffuses into noise, reforms, and fades over approximately
+22 seconds per loop. Reduced-motion preferences keep the complete portrait still. The original
 HouZunSongTi font and arrangement are retained on the Random Play page.
 
 Profile content lives in `public/content/profile.md`; blog entries and language
